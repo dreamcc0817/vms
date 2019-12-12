@@ -9,6 +9,7 @@
         <module>vms-iot-gateway</module>
         <module>vms-service</module>
         <module>vms-gateway</module>
+        <module>vms-upms</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
