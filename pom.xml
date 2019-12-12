@@ -5,11 +5,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>vms-nacos</module>
-        <module>vms-sentinel</module>
         <module>vms-common</module>
         <module>vms-iot-gateway</module>
         <module>vms-service</module>
-        <module>vms-common-log</module>
         <module>vms-gateway</module>
     </modules>
     <parent>
