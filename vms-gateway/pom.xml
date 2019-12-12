@@ -5,7 +5,7 @@
     <parent>
         <artifactId>vms</artifactId>
         <groupId>com.bonc</groupId>
-        <version>v1.0</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,10 +17,6 @@
             <artifactId>vms-common</artifactId>
             <groupId>com.bonc</groupId>
             <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-dependencies</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

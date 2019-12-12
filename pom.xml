@@ -26,8 +26,9 @@
     <properties>
         <revision>v1.0</revision>
         <java.version>8</java.version>
+        <spring-cloud.version>Greenwich.SR4</spring-cloud.version>
         <mybatis-spring-boot-starter.version>2.1.0</mybatis-spring-boot-starter.version>
-        <spring-cloud.version>2.1.1.RELEASE</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
         <hutool.version>5.0.7</hutool.version>
     </properties>
 
@@ -36,6 +37,13 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
