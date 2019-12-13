@@ -3,11 +3,13 @@ package com.bonc.vms.gateway.handler;
 import com.bonc.vms.gateway.cache.IoTDeviceCache;
 import com.bonc.vms.gateway.util.IoTStringUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
@@ -24,8 +26,9 @@ import java.net.InetSocketAddress;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
+@ChannelHandler.Sharable
+@Component
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
-
 
 	/**
 	 * 客户端连接时触发
