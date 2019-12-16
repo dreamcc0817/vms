@@ -1,8 +1,10 @@
 package com.bonc.vms.gateway.codec;
 
+import cn.hutool.core.util.XmlUtil;
 import com.bonc.vms.gateway.entity.AbstractMonitorMessageReceived;
 import com.bonc.vms.gateway.entity.HeaderModel;
 import com.bonc.vms.gateway.util.Const;
+import com.bonc.vms.gateway.util.OperConst;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Title: vms
@@ -55,11 +58,11 @@ public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageRec
 		//验证消息头
 		HeaderModel headerModel = decoderHeader(in);
 		//验证报文版本
-		if(headerModel.getVersion() != Const.XMLFramework.VERSION.getValue()){
+		if (headerModel.getVersion() != Const.XMLFramework.VERSION.getValue()) {
 			log.error("【网关】 报文版本与服务器不一致......");
 			ctx.close();
 		}
-		//TODO 验证拆包粘包长度
+
 		//标记当前readIndex的位置
 		in.markReaderIndex();
 		//读取传送过来的消息的长度，返回当前readerIndex的int值，并将readerIndex增加4
@@ -76,7 +79,27 @@ public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageRec
 		//将数据取出
 		byte[] body = new byte[dataLength];
 		in.readBytes(body);
+		String xmlStr = new String(body);
+		Map map = XmlUtil.xmlToMap(xmlStr);
+		M packet = decodeBody(ctx, map, xmlStr);
+		if(packet == null){
+			log.info("【网关】发生异常{},{}", OperConst.EnDeCoder.DECODER_XML_ERROR.getCode(),OperConst.EnDeCoder.DECODER_XML_ERROR.getMsg());
+			ctx.close();
+		}
+		packet.setCtx(ctx);
+		out.add(packet);
 	}
+
+	/**
+	 * 解码消息体
+	 *
+	 * @param ctx
+	 * @param map
+	 * @param xml
+	 * @return
+	 * @throws Exception
+	 */
+	protected abstract M decodeBody(ChannelHandlerContext ctx, Map map, String xml) throws Exception;
 
 	/**
 	 * 解码消息头

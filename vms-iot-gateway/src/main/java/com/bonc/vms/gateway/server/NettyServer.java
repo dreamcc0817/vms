@@ -1,18 +1,30 @@
 package com.bonc.vms.gateway.server;
 
 import com.bonc.vms.gateway.config.NettyConfig;
+import com.bonc.vms.gateway.rpc.annotation.RPCService;
+import com.bonc.vms.gateway.rpc.config.RPCConfig;
+import com.bonc.vms.gateway.rpc.handler.RPCServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * @Title: vms
@@ -24,35 +36,104 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 @Component
-public class NettyServer {
+public class NettyServer implements ApplicationContextAware, InitializingBean {
 
 	/**
 	 * Netty配置类
 	 */
 	private NettyConfig nettyConfig;
 	/**
+	 * RPC配置类
+	 */
+	private RPCConfig rpcConfig;
+	/**
 	 * 用于接收客户端的TCP连接
 	 */
-	private EventLoopGroup bossGroup;
+	private EventLoopGroup nettyBossGroup;
 	/**
 	 * 用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等
 	 */
-	private EventLoopGroup workerGroup;
+	private EventLoopGroup nettyWorkerGroup;
+	/**
+	 * 用于接收客户端的TCP连接
+	 */
+	private EventLoopGroup rpcBossGroup;
+	/**
+	 * 用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等
+	 */
+	private EventLoopGroup rpcWorkerGroup;
+
+	private Executor executor = Executors.newFixedThreadPool(2);
 
 	ChannelFuture future;
+	/**
+	 * RPC服务接口
+	 */
+	private Map<String, Object> serviceMap = new ConcurrentHashMap<>();
 
-	public NettyServer(NettyConfig nettyConfig) {
+	public NettyServer(NettyConfig nettyConfig,RPCConfig rpcConfig) {
 		this.nettyConfig = nettyConfig;
+		this.rpcConfig = rpcConfig;
 	}
 
-	public ChannelFuture start() {
+	@SneakyThrows
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		//获取所有RPC服务接口
+		Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RPCService.class);
+		for (Object serviceBean : beans.values()) {
+			Class<?> clazz = serviceBean.getClass();
+			Class<?>[] interfaces = clazz.getInterfaces();
+			for (Class<?> anInterface : interfaces) {
+				String interfaceName = anInterface.getName();
+				log.info("【网关】 RPC加载服务类：{}", interfaces);
+				serviceMap.put(interfaceName, serviceBean);
+			}
+			log.info("【网关】 RPC加载服务类加载完成:{}", serviceMap);
+		}
+	}
+
+	@SneakyThrows
+	@Override
+	public void afterPropertiesSet() {
+		log.info("【网关】 会话层管理服务启动初始化！");
+		initEnvriment();
+	}
+
+	/**
+	 * 启动网关，初始化环境
+	 *
+	 * @throws InterruptedException
+	 */
+	@SneakyThrows
+	private void initEnvriment(){
+		CountDownLatch lock = new CountDownLatch(2);
+		//启动设备会话注册服务
+		executor.execute(() -> {
+			lock.countDown();
+			startNetty();
+		});
+		//启动RPC服务
+		executor.execute(() -> {
+			lock.countDown();
+			startRPC();
+		});
+		lock.await();
+	}
+
+	/**
+	 * 启动Netty会话管理网关
+	 *
+	 * @return
+	 */
+	public ChannelFuture startNetty() {
 		//创建主线程，用于接收客户端的TCP连接
-		bossGroup = new NioEventLoopGroup(nettyConfig.getBossThreads());
+		nettyBossGroup = new NioEventLoopGroup(nettyConfig.getBossThreads());
 		//创建工作线程，用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等
-		workerGroup = new NioEventLoopGroup(nettyConfig.getWorkerThreads());
+		nettyWorkerGroup = new NioEventLoopGroup(nettyConfig.getWorkerThreads());
 		//Server端启动器
 		ServerBootstrap bootstrap = new ServerBootstrap()
-				.group(bossGroup, workerGroup)
+				.group(nettyBossGroup, nettyWorkerGroup)
 				.channel(NioServerSocketChannel.class)
 				.childHandler(new ServerChannelInitializer())
 				.localAddress(new InetSocketAddress(nettyConfig.getPort()))
@@ -76,20 +157,60 @@ public class NettyServer {
 			e.printStackTrace();
 		} finally {
 			//关闭主线程组
-			bossGroup.shutdownGracefully();
+			nettyBossGroup.shutdownGracefully();
 			//关闭工作线程组
-			workerGroup.shutdownGracefully();
+			nettyWorkerGroup.shutdownGracefully();
 		}
 		return future;
 	}
-
 	/**
-	 * 关闭netty服务器
+	 * 启动RPC
+	 *
+	 * @return
 	 */
-	public void destroy() {
-		log.info("Shutdown Netty Server...");
-		workerGroup.shutdownGracefully();
-		bossGroup.shutdownGracefully();
-		log.info("Shutdown Netty Server Success!");
+	public void startRPC() {
+		//加载RPC服务
+		RPCServerHandler handler = new RPCServerHandler(serviceMap);
+		//创建主线程，用于接收客户端的TCP连接
+		rpcBossGroup = new NioEventLoopGroup(rpcConfig.getBossThreads());
+		//创建工作线程，用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等
+		rpcWorkerGroup = new NioEventLoopGroup(rpcConfig.getWorkerThreads());
+		//Server端启动器
+		ServerBootstrap bootstrap = new ServerBootstrap()
+				.group(rpcBossGroup, rpcWorkerGroup)
+				.channel(NioServerSocketChannel.class)
+				.childHandler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					protected void initChannel(SocketChannel ch) throws Exception {
+						ChannelPipeline pipeline = ch.pipeline();
+						pipeline.addLast(new IdleStateHandler(0, 0, 60));
+						pipeline.addLast(handler);
+					}
+				})
+				.localAddress(new InetSocketAddress(rpcConfig.getPort()))
+				//打印日志信息
+				.handler(new LoggingHandler(LogLevel.INFO))
+				//设置队列大小
+				.option(ChannelOption.SO_BACKLOG, 1024)
+				//两小时没有数据的通信时，TCP会发送一个活动检测的数据报文
+				.childOption(ChannelOption.SO_KEEPALIVE, true);
+
+		try {
+			future = bootstrap.bind().sync();
+			if (future != null && future.isSuccess()) {
+				log.info("【RPC】 服务器启动成功，开始监听端口: {}", rpcConfig.getPort());
+			} else {
+				log.error("【RPC】 服务器启动失败 ......");
+			}
+			future.channel().closeFuture().sync();
+		} catch (InterruptedException e) {
+			log.error("【RPC】 服务器启动失败：{}", e.getMessage());
+			e.printStackTrace();
+		} finally {
+			//关闭主线程组
+			rpcBossGroup.shutdownGracefully();
+			//关闭工作线程组
+			rpcWorkerGroup.shutdownGracefully();
+		}
 	}
 }

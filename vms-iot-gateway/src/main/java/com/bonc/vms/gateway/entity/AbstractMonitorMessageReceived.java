@@ -1,6 +1,8 @@
 package com.bonc.vms.gateway.entity;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Title: vms
@@ -10,7 +12,8 @@ import io.netty.channel.ChannelHandlerContext;
  * @Date: 2019/12/11 11:20
  * @Version: V1.0
  */
-
+@Getter
+@Setter
 public abstract class AbstractMonitorMessageReceived extends AbstractMonitorMessage {
 
 	private ChannelHandlerContext ctx;

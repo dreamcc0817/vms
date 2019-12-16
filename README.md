@@ -17,7 +17,7 @@ vms
 ├── vms-common -- 系统公共模块 
      ├── vms-common-core -- 公共工具类核心包
      └── vms-common-log -- 日志服务
-├── vms-iot-gateway -- 会话管理模块[9999]
+├── vms-iot-gateway -- 会话管理模块[注册端口9999][RPC端口9888]
 ├── vms-nacos -- 服务注册与发现[8848]
 ├── vms-service 业务模块
      ├──vms-service-device -- 设备管理服务模块[7100]

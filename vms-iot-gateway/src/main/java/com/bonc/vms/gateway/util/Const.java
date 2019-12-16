@@ -12,6 +12,27 @@ import lombok.Getter;
  * @Version: V1.0
  */
 public class Const {
+
+	/**
+	 * 网关常量
+	 */
+	@Getter
+	@AllArgsConstructor
+	public enum Gateway{
+		/**
+		 * 消息头长度
+		 */
+		RPC_HEART_BEAT("心跳检测","4001");
+		/**
+		 * 说明
+		 */
+		private String name;
+		/**
+		 * 值
+		 */
+		private String value;
+	}
+
 	/**
 	 * 消息体解码常量
 	 */
@@ -29,7 +50,11 @@ public class Const {
 		/**
 		 * 指令类型 ：二进制
 		 */
-		CMDTYPE_BINARY("指令类型",1);
+		CMDTYPE_BINARY("指令类型",1),
+		/**
+		 * 指令类型 ：XML明文
+		 */
+		CMDTYPE_XML("指令类型",0);
 		/**
 		 * 说明
 		 */

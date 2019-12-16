@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <artifactId>vms-common</artifactId>
+            <artifactId>vms-common-core</artifactId>
             <groupId>com.bonc</groupId>
             <version>${revision}</version>
         </dependency>
