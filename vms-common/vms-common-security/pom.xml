@@ -9,23 +9,24 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vms-common-core</artifactId>
+    <artifactId>vms-common-security</artifactId>
+
 
     <dependencies>
-        <!-- Lombok -->
+        <!-- 工具类核心包 -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>com.bonc</groupId>
+            <artifactId>vms-common-core</artifactId>
+            <version>${revision}</version>
         </dependency>
-        <!-- hutool -->
+        <!--安全模块-->
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
-        <!-- spring-boot-starter-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 </project>

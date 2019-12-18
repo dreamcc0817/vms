@@ -12,19 +12,19 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @Title: vms
@@ -36,16 +36,17 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class NettyServer implements ApplicationContextAware, InitializingBean {
 
 	/**
 	 * Netty配置类
 	 */
-	private NettyConfig nettyConfig;
+	private final NettyConfig nettyConfig;
 	/**
 	 * RPC配置类
 	 */
-	private RPCConfig rpcConfig;
+	private final RPCConfig rpcConfig;
 	/**
 	 * 用于接收客户端的TCP连接
 	 */
@@ -62,19 +63,24 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 	 * 用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等
 	 */
 	private EventLoopGroup rpcWorkerGroup;
-
-	private Executor executor = Executors.newFixedThreadPool(2);
+	/**
+	 * 线程池
+	 */
+	private final ThreadPoolTaskExecutor executor;
 
 	ChannelFuture future;
+
+	@Autowired
+	public NettyServer(NettyConfig nettyConfig, RPCConfig rpcConfig, ThreadPoolTaskExecutor executor) {
+		this.nettyConfig = nettyConfig;
+		this.rpcConfig = rpcConfig;
+		this.executor = executor;
+	}
+
 	/**
 	 * RPC服务接口
 	 */
 	private Map<String, Object> serviceMap = new ConcurrentHashMap<>();
-
-	public NettyServer(NettyConfig nettyConfig,RPCConfig rpcConfig) {
-		this.nettyConfig = nettyConfig;
-		this.rpcConfig = rpcConfig;
-	}
 
 	@SneakyThrows
 	@Override
@@ -103,10 +109,10 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 	/**
 	 * 启动网关，初始化环境
 	 *
-	 * @throws InterruptedException
+	 * @throws InterruptedException 异常中断
 	 */
 	@SneakyThrows
-	private void initEnvriment(){
+	private void initEnvriment() {
 		CountDownLatch lock = new CountDownLatch(2);
 		//启动设备会话注册服务
 		executor.execute(() -> {
@@ -163,6 +169,7 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 		}
 		return future;
 	}
+
 	/**
 	 * 启动RPC
 	 *

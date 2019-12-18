@@ -15,6 +15,7 @@
     <modules>
         <module>vms-common-core</module>
         <module>vms-common-log</module>
+        <module>vms-common-security</module>
     </modules>
 
 </project>

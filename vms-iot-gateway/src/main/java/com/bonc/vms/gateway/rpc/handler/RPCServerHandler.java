@@ -6,6 +6,7 @@ import com.bonc.vms.gateway.rpc.dataBridge.Response;
 import com.bonc.vms.gateway.util.Const;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,15 +22,12 @@ import java.util.Map;
  * @Version: V1.0
  */
 @Slf4j
+@AllArgsConstructor
 public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * RPC服务类
 	 */
 	private final Map<String, Object> serviceBeans;
-
-	public RPCServerHandler(Map<String, Object> serviceBeans) {
-		this.serviceBeans = serviceBeans;
-	}
 
 	/**
 	 * RPC注册连接

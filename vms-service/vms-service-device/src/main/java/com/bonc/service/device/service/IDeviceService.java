@@ -1,4 +1,4 @@
-package com.bonc.vms.gateway.service;
+package com.bonc.service.device.service;
 
 /**
  * @Title: vms
@@ -10,9 +10,10 @@ package com.bonc.vms.gateway.service;
  */
 public interface IDeviceService {
 
+
 	/**
 	 * 查询设备连接信息
-	 *
+	 * @param ip ip
 	 * @return
 	 */
 	String findDevice(String ip);

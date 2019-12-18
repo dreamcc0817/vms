@@ -4,11 +4,13 @@
 #### 核心依赖 
 
 
-依赖 | 版本
----|---
-Spring Boot |  2.1.6.RELEASE  
-Spring Cloud Alibaba | 2.1.1.RELEASE   
-Spring Cloud | Spring Cloud Greenwich
+依赖 | 版本| 功能|
+---|---|---
+Spring Boot |  2.1.6.RELEASE  |Spring Boot
+Spring Cloud Alibaba | 2.1.1.RELEASE  | Spring Cloud Alibaba
+Spring Cloud | Spring Cloud Greenwich.SR4|Spring Cloud
+Hutool | 5.0.7 | 通用工具类
+Mybatis-Plus | 3.3.0 | MyBatis增强
 
 
 #### 模块说明

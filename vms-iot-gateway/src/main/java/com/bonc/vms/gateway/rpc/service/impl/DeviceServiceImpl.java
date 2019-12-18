@@ -1,8 +1,8 @@
-package com.bonc.vms.gateway.service.impl;
+package com.bonc.vms.gateway.rpc.service.impl;
 
 import com.bonc.vms.gateway.cache.IoTDeviceCache;
 import com.bonc.vms.gateway.rpc.annotation.RPCService;
-import com.bonc.vms.gateway.service.IDeviceService;
+import com.bonc.vms.gateway.rpc.service.IDeviceService;
 import io.netty.channel.Channel;
 
 /**
