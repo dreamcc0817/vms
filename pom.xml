@@ -32,7 +32,7 @@
         <hutool.version>5.0.7</hutool.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <netty-version>4.1.36.Final</netty-version>
-        <zookeeper-version>3.4.8</zookeeper-version>
+        <zookeeper-version>3.4.14</zookeeper-version>
         <zkclient-version>0.11</zkclient-version>
         <fastjson.version>1.2.47</fastjson.version>
     </properties>
