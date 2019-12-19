@@ -2,6 +2,7 @@ package com.bonc.service.device.rpc.client;
 
 import cn.hutool.json.JSONUtil;
 import com.bonc.common.core.constant.CommonConstants;
+import com.bonc.service.device.rpc.codec.JSONDecoder;
 import com.bonc.service.device.rpc.codec.JSONEncoder;
 import com.bonc.service.device.rpc.connection.ConnectManage;
 import com.bonc.service.device.rpc.dataBridge.Request;
@@ -64,6 +65,7 @@ public class NettyClient {
 					protected void initChannel(SocketChannel channel) throws Exception {
 						ChannelPipeline pipeline = channel.pipeline();
 						pipeline.addLast(new IdleStateHandler(0, 0, 30));
+						pipeline.addLast(new JSONDecoder());
 						pipeline.addLast(new JSONEncoder());
 						pipeline.addLast("handler",clientHandler);
 					}
@@ -97,7 +99,7 @@ public class NettyClient {
 		Channel channel = connectManage.chooseChannel();
 		if (channel != null && channel.isActive()) {
 			SynchronousQueue<Object> queue = clientHandler.sendRequest(request,channel);
-			//取出队列头
+			//取出结果
 			Object result = queue.take();
 			return JSONUtil.toJsonStr(result);
 		}else {

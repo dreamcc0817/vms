@@ -2,6 +2,8 @@ package com.bonc.vms.gateway.server;
 
 import com.bonc.vms.gateway.config.NettyConfig;
 import com.bonc.vms.gateway.rpc.annotation.RPCService;
+import com.bonc.vms.gateway.rpc.codec.JSONDecoder;
+import com.bonc.vms.gateway.rpc.codec.JSONEncoder;
 import com.bonc.vms.gateway.rpc.config.RPCConfig;
 import com.bonc.vms.gateway.rpc.handler.RPCServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -24,7 +26,8 @@ import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @Title: vms
@@ -82,7 +85,6 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 	 */
 	private Map<String, Object> serviceMap = new ConcurrentHashMap<>();
 
-	@SneakyThrows
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		//获取所有RPC服务接口
@@ -91,7 +93,7 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 			Class<?> clazz = serviceBean.getClass();
 			Class<?>[] interfaces = clazz.getInterfaces();
 			for (Class<?> anInterface : interfaces) {
-				String interfaceName = anInterface.getName();
+				String interfaceName = anInterface.getSimpleName();
 				log.info("【网关】 RPC加载服务类：{}", interfaces);
 				serviceMap.put(interfaceName, serviceBean);
 			}
@@ -191,6 +193,8 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 					protected void initChannel(SocketChannel ch) throws Exception {
 						ChannelPipeline pipeline = ch.pipeline();
 						pipeline.addLast(new IdleStateHandler(0, 0, 60));
+						pipeline.addLast(new JSONDecoder());
+						pipeline.addLast(new JSONEncoder());
 						pipeline.addLast(handler);
 					}
 				})

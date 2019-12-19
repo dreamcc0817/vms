@@ -1,5 +1,4 @@
-package com.bonc.service.device.rpc.codec;
-
+package com.bonc.vms.gateway.rpc.codec;
 
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
@@ -11,10 +10,10 @@ import java.util.List;
 
 /**
  * @Title: vms
- * @Package: com.bonc.service.device.rpc.codec
+ * @Package: com.bonc.vms.gateway.rpc.codec
  * @Description: JSON编码
  * @Author: dreamcc
- * @Date: 2019/12/18 8:59
+ * @Date: 2019/12/18 16:17
  * @Version: V1.0
  */
 public class JSONEncoder extends MessageToMessageEncoder {

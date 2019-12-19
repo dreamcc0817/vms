@@ -1,6 +1,11 @@
 package com.bonc.vms.gateway.rpc.annotation;
 
-import java.lang.annotation.*;
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @Title: vms
@@ -10,9 +15,9 @@ import java.lang.annotation.*;
  * @Date: 2019/12/13 15:08
  * @Version: V1.0
  */
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Documented
+@Component
 public @interface RPCService {
 	String value() default "";
 }

@@ -1,7 +1,6 @@
 package com.bonc.service.device.rpc.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.bonc.service.device.rpc.client.NettyClient;
 import com.bonc.service.device.rpc.connection.ConnectManage;
 import com.bonc.service.device.rpc.dataBridge.Request;
 import com.bonc.service.device.rpc.dataBridge.Response;
@@ -33,10 +32,7 @@ import java.util.concurrent.SynchronousQueue;
 @ChannelHandler.Sharable
 @AllArgsConstructor
 public class NettyClientHandler extends ChannelInboundHandlerAdapter {
-	/**
-	 * netty消费端
-	 */
-	private final NettyClient client;
+
 	/**
 	 * 连接管理
 	 */
@@ -47,8 +43,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 	private Map<String, SynchronousQueue<Object>> queueMap = new ConcurrentHashMap<>();
 
 	@Autowired
-	public NettyClientHandler(NettyClient client, ConnectManage connectManage) {
-		this.client = client;
+	public NettyClientHandler(ConnectManage connectManage) {
 		this.connectManage = connectManage;
 	}
 
@@ -73,7 +68,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	@SneakyThrows
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		log.info("服务器收到{}的消息：{}", ctx.channel().remoteAddress(), msg.toString());
+		log.info("客户端收到服务器{}的消息：{}", ctx.channel().remoteAddress(), msg.toString());
 		Response response = JSONUtil.toBean(msg.toString(), Response.class);
 		String requestId = response.getRequestId();
 		//将异步装换为同步方法，等待服务器返回数据继续执行

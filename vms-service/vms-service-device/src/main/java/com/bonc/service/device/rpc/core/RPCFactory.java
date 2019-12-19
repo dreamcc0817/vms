@@ -42,7 +42,7 @@ public class RPCFactory<T> implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args) {
 		Request request = new Request();
 		//设置类名称
-		request.setClassName(method.getDeclaringClass().getName());
+		request.setClassName(method.getDeclaringClass().getSimpleName());
 		//设置方法名
 		request.setMethodName(method.getName());
 		//设置参数

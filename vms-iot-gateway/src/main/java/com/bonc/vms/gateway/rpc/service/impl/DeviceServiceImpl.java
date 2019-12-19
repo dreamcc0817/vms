@@ -4,6 +4,7 @@ import com.bonc.vms.gateway.cache.IoTDeviceCache;
 import com.bonc.vms.gateway.rpc.annotation.RPCService;
 import com.bonc.vms.gateway.rpc.service.IDeviceService;
 import io.netty.channel.Channel;
+import org.springframework.stereotype.Component;
 
 /**
  * @Title: vms
@@ -14,11 +15,12 @@ import io.netty.channel.Channel;
  * @Version: V1.0
  */
 @RPCService
+@Component
 public class DeviceServiceImpl implements IDeviceService {
 
 	@Override
 	public String findDevice(String ip) {
 		Channel channel = IoTDeviceCache.get(ip);
-		return null;
+		return "Hello Netty";
 	}
 }

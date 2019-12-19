@@ -1,9 +1,11 @@
 package com.bonc.vms.gateway.rpc.handler;
 
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
+import com.bonc.common.core.constant.CommonConstants;
 import com.bonc.vms.gateway.rpc.dataBridge.Request;
 import com.bonc.vms.gateway.rpc.dataBridge.Response;
 import com.bonc.vms.gateway.util.Const;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @Version: V1.0
  */
 @Slf4j
+@ChannelHandler.Sharable
 @AllArgsConstructor
 public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 	/**
@@ -51,7 +54,7 @@ public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 	@SneakyThrows
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		Request request = JSONUtil.toBean(msg.toString(), Request.class);
+		Request request = JSON.parseObject(msg.toString(),Request.class);
 		if (Const.Gateway.RPC_HEART_BEAT.getValue().equals(request.getMethodName())) {
 			log.info("【RPC】客户端{}心跳连接", ctx.channel().remoteAddress());
 		} else {
@@ -59,7 +62,9 @@ public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 			Response response = new Response();
 			response.setRequestId(request.getId());
 			Object result = this.handler(request);
+			response.setCode(CommonConstants.SUCCESS);
 			response.setData(result);
+			log.info("【RPC】服务端返回：{}", response);
 			ctx.writeAndFlush(response);
 		}
 	}
@@ -117,7 +122,7 @@ public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 		} else {
 			Object[] newParameter = new Object[parameters.length];
 			for (int i = 0; i < parameters.length; i++) {
-				newParameter[i] = JSONUtil.toBean(parameters[i].toString(), parameterTypes[i]);
+					newParameter[i] = JSON.parseObject(parameters[i].toString(), parameterTypes[i]);
 			}
 			return newParameter;
 		}
