@@ -18,6 +18,6 @@ public class IoTStringUtil {
 	 * @return 格式化后的地址
 	 */
 	public static String formatIpAddress(String ip, String port) {
-		return String.format("%s|%s", ip.trim(), port.trim());
+		return String.format("%s:%s", ip.trim(), port.trim());
 	}
 }

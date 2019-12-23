@@ -21,7 +21,7 @@ public class RPCScannerConfigurer implements BeanDefinitionRegistryPostProcessor
 	/**
 	 * 扫描的包
 	 */
-	String basePackage = "com.bonc.service.device.service";
+	String basePackage = "com.bonc.service.device.rpc.service";
 
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {

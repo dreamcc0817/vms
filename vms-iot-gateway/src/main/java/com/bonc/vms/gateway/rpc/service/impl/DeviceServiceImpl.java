@@ -21,6 +21,7 @@ public class DeviceServiceImpl implements IDeviceService {
 	@Override
 	public String findDevice(String ip) {
 		Channel channel = IoTDeviceCache.get(ip);
-		return "Hello Netty";
+		String s = (channel == null) ? "Hello Netty" : channel.remoteAddress().toString();
+		return s;
 	}
 }

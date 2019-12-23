@@ -122,11 +122,12 @@ public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 		} else {
 			Object[] newParameter = new Object[parameters.length];
 			for (int i = 0; i < parameters.length; i++) {
-					newParameter[i] = JSON.parseObject(parameters[i].toString(), parameterTypes[i]);
+				newParameter[i] = parameters[i];
 			}
 			return newParameter;
 		}
 	}
+
 
 
 }

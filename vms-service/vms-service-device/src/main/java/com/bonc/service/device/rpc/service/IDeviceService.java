@@ -1,4 +1,4 @@
-package com.bonc.service.device.service;
+package com.bonc.service.device.rpc.service;
 
 /**
  * @Title: vms
