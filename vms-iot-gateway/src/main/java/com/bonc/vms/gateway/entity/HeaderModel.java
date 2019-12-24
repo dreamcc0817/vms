@@ -32,4 +32,12 @@ public class HeaderModel {
 	 * 消息体长度
 	 */
 	private int bodyLength;
+	/**
+	 * 保留字段一
+	 */
+	private int reserved1;
+	/**
+	 * 保留字段二
+	 */
+	private int reserved2;
 }

@@ -24,19 +24,25 @@ import java.util.Map;
  * @Version: V1.0
  */
 @Slf4j
-public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageReceived> extends ByteToMessageDecoder {
+public abstract class AbstractMonitorDecoder<T extends AbstractMonitorMessageReceived> extends ByteToMessageDecoder {
 
 	/**
 	 * 消息类型
 	 */
 	private int msgType;
 
-	public AbstractMonitorDecoder() throws IllegalAccessException, InstantiationException {
+	public AbstractMonitorDecoder(){
 		//使用模板设计模式，将不同消息体进行不同解码
 		//根据反射获取泛型类型
 		ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
-		Class<M> entity = (Class<M>) type.getActualTypeArguments()[0];
-		this.msgType = entity.newInstance().msgType;
+		Class<T> entity = (Class<T>) type.getActualTypeArguments()[0];
+		try {
+			this.msgType = entity.newInstance().msgType;
+		} catch (InstantiationException e) {
+			log.error("解码发生异常：{}",e.getMessage());
+		} catch (IllegalAccessException e) {
+			log.error("解码发生异常：{}",e.getMessage());
+		}
 	}
 
 	/**
@@ -66,7 +72,7 @@ public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageRec
 		//标记当前readIndex的位置
 		in.markReaderIndex();
 		//读取传送过来的消息的长度，返回当前readerIndex的int值，并将readerIndex增加4
-		int dataLength = in.readInt();
+		int dataLength = headerModel.getBodyLength();
 		// 我们读到的消息体长度为0，这是不应该出现的情况，这里出现这情况，关闭连接。
 		if (dataLength < 0) {
 			ctx.close();
@@ -81,7 +87,7 @@ public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageRec
 		in.readBytes(body);
 		String xmlStr = new String(body);
 		Map map = XmlUtil.xmlToMap(xmlStr);
-		M packet = decodeBody(ctx, map, xmlStr);
+		T packet = decodeBody(ctx, map, xmlStr);
 		if(packet == null){
 			log.info("【网关】发生异常{},{}", OperConst.EnDeCoder.DECODER_XML_ERROR.getCode(),OperConst.EnDeCoder.DECODER_XML_ERROR.getMsg());
 			ctx.close();
@@ -99,7 +105,7 @@ public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageRec
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract M decodeBody(ChannelHandlerContext ctx, Map map, String xml) throws Exception;
+	protected abstract T decodeBody(ChannelHandlerContext ctx, Map map, String xml) throws Exception;
 
 	/**
 	 * 解码消息头
@@ -125,6 +131,10 @@ public abstract class AbstractMonitorDecoder<M extends AbstractMonitorMessageRec
 		headerModel.setDataType(in.readInt());
 		//获取body长度
 		headerModel.setBodyLength(in.readInt());
+		//获取保留字段
+		headerModel.setReserved1(in.readInt());
+		//获取保留字段
+		headerModel.setReserved2(in.readInt());
 		return headerModel;
 	}
 }

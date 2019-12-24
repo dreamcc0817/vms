@@ -22,7 +22,7 @@ public class Const {
 		/**
 		 * 消息头长度
 		 */
-		RPC_HEART_BEAT("心跳检测","4001");
+		RPC_HEART_BEAT("心跳检测",4001);
 		/**
 		 * 说明
 		 */
@@ -30,7 +30,7 @@ public class Const {
 		/**
 		 * 值
 		 */
-		private String value;
+		private Integer value;
 	}
 
 	/**
