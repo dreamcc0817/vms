@@ -21,6 +21,16 @@ public interface CommonConstants {
 	 * 成功消息
 	 */
 	String SUCCESS_MSG = "SUCCESS";
-
+	/**
+	 * 失败消息
+	 */
 	String FAILED_SUCCESS = "FAILED";
+	/**
+	 * 正常
+	 */
+	Integer STATUS_NORMAL = 1;
+	/**
+	 * 删除
+	 */
+	Integer STATUS_DEL = 0;
 }

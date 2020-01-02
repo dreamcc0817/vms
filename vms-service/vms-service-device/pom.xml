@@ -18,7 +18,7 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <artifactId>vms-common-mongodb</artifactId>
+            <artifactId>vms-common-swagger</artifactId>
             <groupId>com.bonc</groupId>
             <version>${revision}</version>
         </dependency>
@@ -26,6 +26,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--数据库-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <!-- netty客户端 -->
         <dependency>
@@ -52,6 +57,10 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-
+        <!--  mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,60 +1,38 @@
 package com.bonc.service.device.controller;
 
-import cn.hutool.core.util.IdUtil;
-import com.bonc.service.device.entity.ServerDevice;
-import com.bonc.service.device.service.IServerDevice;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.web.bind.annotation.*;
+import com.bonc.common.core.util.R;
+import com.bonc.service.device.dto.ServerDeviceDTO;
+import com.bonc.service.device.service.IServerDeviceService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Title: vms
  * @Package: com.bonc.service.device.controller
- * @Description: 服务器设备请求接口
+ * @Description: 服务器设备controller
  * @Author: dreamcc
  * @Date: 2019/12/17 16:57
  * @Version: V1.0
  */
+@Api(tags = "服务器设备模块")
+@Slf4j
+@AllArgsConstructor
 @RestController
+@RequestMapping("/server")
 public class ServerDeviceController {
 
-	@Autowired
-	private IServerDevice serverDeviceService;
+	private IServerDeviceService serverDeviceService;
 
-
-	@PostMapping("/save")
-	public String insertServerDevice() {
-		ServerDevice serverDevice = new ServerDevice();
-		serverDevice.setId(IdUtil.createSnowflake(0, 0).nextId());
-		serverDevice.setIp("11111");
-		serverDevice.setDeviceType(1);
-		String result = serverDeviceService.insert(serverDevice).toString();
-		return result;
+	@ApiOperation("添加服务器设备")
+	@PostMapping("/add")
+	public R addServerDevice(ServerDeviceDTO serverDeviceDTO) {
+		Boolean result = serverDeviceService.addServerDevice(serverDeviceDTO);
+		return R.ok(result);
 	}
 
-	@PutMapping("/update")
-	public String update(Long id) {
-		ServerDevice serverDevice = new ServerDevice();
-		serverDevice.setId(id);
-		serverDevice.setDeviceType(2);
-		serverDeviceService.update(serverDevice);
-		return "update";
-	}
-
-	@GetMapping("/get")
-	public String find(Long id) {
-		Criteria criteria = Criteria.where("id").is(id);
-		Query query = Query.query(criteria);
-		ServerDevice serverDevice = serverDeviceService.findOne(query);
-		return serverDevice.toString();
-	}
-
-	@DeleteMapping("/delete")
-	public String delete(Long id) {
-		ServerDevice serverDevice = new ServerDevice();
-		serverDevice.setId(id);
-		serverDeviceService.delete(serverDevice);
-		return "delete";
-	}
 }

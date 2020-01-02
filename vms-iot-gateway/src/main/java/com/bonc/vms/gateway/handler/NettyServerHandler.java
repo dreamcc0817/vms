@@ -8,9 +8,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
 
 
@@ -27,9 +32,20 @@ import java.net.InetSocketAddress;
 @Data
 @Slf4j
 @ChannelHandler.Sharable
+@NoArgsConstructor
 @Component
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
+
+	@Autowired
+	private Source source;
+
+	private static NettyServerHandler nettyServerHandler;
+
+	@PostConstruct
+	public void init(){
+		nettyServerHandler = this;
+	}
 	/**
 	 * 客户端连接时触发
 	 *
@@ -60,11 +76,17 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		log.info("【网关】 收到消息：{}", msg.toString());
+		//发送至mq
+		if(msg != null){
+			nettyServerHandler.source.output().send(MessageBuilder.withPayload(msg).build());
+		}
 	}
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		log.info("【网关】 读取消息完毕 ......");
+
+
 	}
 
 	/**

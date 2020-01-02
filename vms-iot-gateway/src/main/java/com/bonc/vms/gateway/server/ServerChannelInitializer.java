@@ -1,6 +1,6 @@
 package com.bonc.vms.gateway.server;
 
-import com.bonc.vms.gateway.codec.KeepAliveReceivedDecoder;
+import com.bonc.vms.gateway.codec.AbstractMonitorDecoder;
 import com.bonc.vms.gateway.handler.NettyServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -25,7 +25,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
 	protected void initChannel(SocketChannel ch) {
 		//添加编解码
 		ch.pipeline().addLast("encoder", new StringEncoder(CharsetUtil.UTF_8));
-		ch.pipeline().addLast("decoder", new KeepAliveReceivedDecoder());
+		ch.pipeline().addLast("decoder", new AbstractMonitorDecoder());
 		ch.pipeline().addLast(new NettyServerHandler());
 	}
 }

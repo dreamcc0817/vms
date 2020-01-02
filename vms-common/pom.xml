@@ -17,6 +17,7 @@
         <module>vms-common-log</module>
         <module>vms-common-security</module>
         <module>vms-common-mongodb</module>
+        <module>vms-common-swagger</module>
     </modules>
 
 </project>

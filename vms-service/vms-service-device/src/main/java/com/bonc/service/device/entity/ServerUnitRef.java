@@ -1,0 +1,24 @@
+package com.bonc.service.device.entity;
+
+import lombok.Data;
+
+/**
+ * @Title: vms
+ * @Package: com.bonc.service.device.entity
+ * @Description: 服务器设备与服务单元关系类
+ * @Author: dreamcc
+ * @Date: 2020/1/2 11:25
+ * @Version: V1.0
+ */
+@Data
+public class ServerUnitRef {
+
+	/**
+	 * 服务器ID
+	 */
+	private Long serverId;
+	/**
+	 * 设备服务单元ID
+	 */
+	private Long unitId;
+}
