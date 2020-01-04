@@ -1,0 +1,15 @@
+server:
+  port: 8899
+spring:
+  application:
+    name: vms-service-alarm
+
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          name-server: 106.12.191.184:9876
+      bindings:
+        input:
+          destination: vms-topic
+          group: vms-alarm

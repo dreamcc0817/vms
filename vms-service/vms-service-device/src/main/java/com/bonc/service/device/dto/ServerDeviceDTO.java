@@ -25,6 +25,6 @@ public class ServerDeviceDTO extends ServerDevice {
 	/**
 	 * 服务单元ID
 	 */
-	@ApiModelProperty(value = "服务单元ID",example = "1000245124651", dataType = "Long")
-	private List<Long> serverUnitId;
+	@ApiModelProperty(value = "服务单元类型",example = "10002")
+	private List<Integer> serverUnitType;
 }

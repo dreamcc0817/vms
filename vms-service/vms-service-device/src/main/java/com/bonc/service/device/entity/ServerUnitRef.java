@@ -1,5 +1,6 @@
 package com.bonc.service.device.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  * @Version: V1.0
  */
 @Data
+@TableName("device_server_unit_ref")
 public class ServerUnitRef {
 
 	/**

@@ -2,12 +2,15 @@ package com.bonc.service.device.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bonc.common.core.constant.CommonConstants;
-import com.bonc.service.device.mapper.ServerDeviceMapper;
 import com.bonc.service.device.dto.ServerDeviceDTO;
 import com.bonc.service.device.entity.ServerDevice;
+import com.bonc.service.device.entity.ServerUnit;
 import com.bonc.service.device.entity.ServerUnitRef;
+import com.bonc.service.device.mapper.ServerDeviceMapper;
 import com.bonc.service.device.service.IServerDeviceService;
 import com.bonc.service.device.service.IServerUnitRefService;
+import com.bonc.service.device.service.IServerUnitService;
+import com.bonc.service.device.util.DeviceConst;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -15,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,8 @@ public class ServerDeviceServiceImpl extends ServiceImpl<ServerDeviceMapper, Ser
 
 	private final IServerUnitRefService serverUnitRefService;
 
+	private final IServerUnitService serverUnitService;
+
 	/**
 	 * 添加服务器设备与服务单元
 	 *
@@ -49,22 +53,43 @@ public class ServerDeviceServiceImpl extends ServiceImpl<ServerDeviceMapper, Ser
 		BeanUtils.copyProperties(serverDeviceDTO, serverDevice);
 		serverDevice.setCreateTime(LocalDateTime.now());
 		serverDevice.setState(CommonConstants.STATUS_NORMAL);
+		serverDevice.setDelFlag(CommonConstants.STATUS_NORMAL);
 		int addServerInfo = baseMapper.insert(serverDevice);
-		//添加服务单元信息
-		List<ServerUnitRef> serverUnitRefList = new ArrayList<>();
-		if(serverDeviceDTO.getServerUnitId()!= null && serverDeviceDTO.getServerUnitId().size()>0){
-			serverUnitRefList = serverDeviceDTO.getServerUnitId()
-					.stream()
-					.map(unitId -> {
-						ServerUnitRef serverUnitRef = new ServerUnitRef();
-						serverUnitRef.setServerId(serverDeviceDTO.getId());
-						serverUnitRef.setUnitId(unitId);
-						return serverUnitRef;
-					}).collect(Collectors.toList());	
+		if (serverDeviceDTO.getServerUnitType() == null || serverDeviceDTO.getServerUnitType().size() <= 0) {
+			if (addServerInfo > 0) {
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
 		}
-		boolean addUnitResult = serverUnitRefService.saveBatch(serverUnitRefList);
+		//添加服务单元信息
+		List<ServerUnit> serverUnitList = serverDeviceDTO.getServerUnitType()
+				.stream()
+				.map(unitType -> {
+					ServerUnit serverUnit = new ServerUnit();
+					serverUnit.setUnitName(serverDevice.getServerName() + "_" + DeviceConst.UnitType.getName(unitType));
+					serverUnit.setType(unitType);
+					serverUnit.setPort(DeviceConst.INVALID_PORT);
+					serverUnit.setLoadNum(DeviceConst.LOAD_DUFAULT);
+					serverUnit.setState(DeviceConst.OFF_ONLINE);
+					serverUnit.setCreateTime(LocalDateTime.now());
+					return serverUnit;
+				})
+				.collect(Collectors.toList());
+		boolean addUnitResult = serverUnitService.saveBatch(serverUnitList);
+		//添加服务器与服务单元关联信息
+		List<ServerUnitRef> serverUnitRefList = serverUnitList
+				.stream()
+				.map(unit -> {
+					ServerUnitRef serverUnitRef = new ServerUnitRef();
+					serverUnitRef.setServerId(serverDevice.getId());
+					serverUnitRef.setUnitId(unit.getId());
+					return serverUnitRef;
+				})
+				.collect(Collectors.toList());
+		boolean addRefResult = serverUnitRefService.saveBatch(serverUnitRefList);
 		//判断保存结果
-		if (addServerInfo > 0 && addUnitResult) {
+		if (addServerInfo > 0 && addUnitResult && addRefResult) {
 			return Boolean.TRUE;
 		} else {
 			return Boolean.FALSE;

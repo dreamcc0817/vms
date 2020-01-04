@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version: V1.0
  */
 @SpringBootApplication
+//@EnableBinding({Sink.class})
 public class DeviceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DeviceApplication.class, args);

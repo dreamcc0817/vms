@@ -12,4 +12,10 @@ import com.bonc.service.device.entity.ServerUnit;
  * @Version: V1.0
  */
 public interface IServerUnitService extends IService<ServerUnit> {
+	/**
+	 * 检测设备在线状态
+	 * @param message mq消息
+	 * @return 状态
+	 */
+	Integer checkDeviceState(String message);
 }

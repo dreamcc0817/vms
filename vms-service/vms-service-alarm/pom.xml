@@ -13,15 +13,18 @@
 
     <dependencies>
         <!-- spring-boot-starter-->
-
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>vms-common-core</artifactId>
+            <groupId>com.bonc</groupId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>
