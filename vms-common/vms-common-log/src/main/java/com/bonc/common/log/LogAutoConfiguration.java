@@ -2,6 +2,7 @@ package com.bonc.common.log;
 
 import com.bonc.common.log.aspect.SysLogAspect;
 import com.bonc.common.log.event.SysLogListener;
+import com.bonc.upms.feign.IRemoteLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @AllArgsConstructor
 @ConditionalOnWebApplication
 public class LogAutoConfiguration {
+
+	private final IRemoteLogService remoteLogService;
+
 	/**
 	 * 注册日志监听
 	 *
@@ -28,7 +32,7 @@ public class LogAutoConfiguration {
 	 */
 	@Bean
 	public SysLogListener sysLogListener() {
-		return new SysLogListener();
+		return new SysLogListener(remoteLogService);
 	}
 
 	/**

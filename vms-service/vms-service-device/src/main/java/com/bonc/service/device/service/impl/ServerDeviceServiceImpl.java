@@ -1,7 +1,7 @@
 package com.bonc.service.device.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bonc.common.core.constant.CommonConstants;
+import com.bonc.common.core.constant.CommonConsts;
 import com.bonc.service.device.dto.ServerDeviceDTO;
 import com.bonc.service.device.entity.ServerDevice;
 import com.bonc.service.device.entity.ServerUnit;
@@ -52,8 +52,8 @@ public class ServerDeviceServiceImpl extends ServiceImpl<ServerDeviceMapper, Ser
 		//添加服务器设备基本信息
 		BeanUtils.copyProperties(serverDeviceDTO, serverDevice);
 		serverDevice.setCreateTime(LocalDateTime.now());
-		serverDevice.setState(CommonConstants.STATUS_NORMAL);
-		serverDevice.setDelFlag(CommonConstants.STATUS_NORMAL);
+		serverDevice.setState(CommonConsts.STATUS_NORMAL);
+		serverDevice.setDelFlag(CommonConsts.STATUS_NORMAL);
 		int addServerInfo = baseMapper.insert(serverDevice);
 		if (serverDeviceDTO.getServerUnitType() == null || serverDeviceDTO.getServerUnitType().size() <= 0) {
 			if (addServerInfo > 0) {

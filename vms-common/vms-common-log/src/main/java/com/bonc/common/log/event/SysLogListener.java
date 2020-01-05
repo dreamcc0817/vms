@@ -1,5 +1,8 @@
 package com.bonc.common.log.event;
 
+import com.bonc.common.core.constant.SecurityConsts;
+import com.bonc.upms.entity.SysLog;
+import com.bonc.upms.feign.IRemoteLogService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -17,6 +20,9 @@ import org.springframework.scheduling.annotation.Async;
 @Slf4j
 @AllArgsConstructor
 public class SysLogListener {
+
+	private final IRemoteLogService remoteLogService;
+
 	/**
 	 * 监听日志事件，调用远程服务保存日志
 	 *
@@ -26,6 +32,7 @@ public class SysLogListener {
 	@Order
 	@EventListener(SysLogEvent.class)
 	public void saveSysLog(SysLogEvent event) {
-
+		SysLog sysLog = (SysLog) event.getSource();
+		remoteLogService.saveLog(sysLog, SecurityConsts.FROM_IN);
 	}
 }

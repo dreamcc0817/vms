@@ -1,6 +1,9 @@
 package com.bonc.common.log.aspect;
 
+import com.bonc.common.core.util.SpringContextHolder;
 import com.bonc.common.log.annotation.SysLog;
+import com.bonc.common.log.event.SysLogEvent;
+import com.bonc.common.log.util.SysLogUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,12 +24,17 @@ public class SysLogAspect {
 
 	@Around("@annotation(sysLog)")
 	@SneakyThrows
-	public Object around(ProceedingJoinPoint point, SysLog sysLog){
+	public Object around(ProceedingJoinPoint point, SysLog sysLog) {
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		log.debug("[类名]:{},[方法]:{}", className, methodName);
-		//TODO 待完善，需整合upms模块
+		com.bonc.upms.entity.SysLog logVo = SysLogUtils.getSysLog();
+		logVo.setTitle(sysLog.value());
+		Long startTime = System.currentTimeMillis();
 		Object obj = point.proceed();
+		Long endTimd = System.currentTimeMillis();
+		logVo.setTime(endTimd - startTime);
+		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
 		return obj;
 	}
 }

@@ -1,7 +1,7 @@
 package com.bonc.service.device.rpc.client;
 
 import cn.hutool.json.JSONUtil;
-import com.bonc.common.core.constant.CommonConstants;
+import com.bonc.common.core.constant.CommonConsts;
 import com.bonc.service.device.rpc.codec.JSONDecoder;
 import com.bonc.service.device.rpc.codec.JSONEncoder;
 import com.bonc.service.device.rpc.connection.ConnectManage;
@@ -104,7 +104,7 @@ public class NettyClient {
 			return JSONUtil.toJsonStr(result);
 		}else {
 			Response response = new Response();
-			response.setCode(CommonConstants.FAILED);
+			response.setCode(CommonConsts.FAILED);
 			log.error("未正确连接服务器，请检查配置信息！");
 			response.setErrorMsg("未正确连接服务器，请检查配置信息！");
 			return JSONUtil.toJsonStr(response);

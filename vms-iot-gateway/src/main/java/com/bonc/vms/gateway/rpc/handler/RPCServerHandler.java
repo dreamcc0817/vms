@@ -1,7 +1,7 @@
 package com.bonc.vms.gateway.rpc.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.bonc.common.core.constant.CommonConstants;
+import com.bonc.common.core.constant.CommonConsts;
 import com.bonc.vms.gateway.rpc.dataBridge.Request;
 import com.bonc.vms.gateway.rpc.dataBridge.Response;
 import com.bonc.vms.gateway.util.Const;
@@ -62,7 +62,7 @@ public class RPCServerHandler extends ChannelInboundHandlerAdapter {
 			Response response = new Response();
 			response.setRequestId(request.getId());
 			Object result = this.handler(request);
-			response.setCode(CommonConstants.SUCCESS);
+			response.setCode(CommonConsts.SUCCESS);
 			response.setData(result);
 			log.info("【RPC】服务端返回：{}", response);
 			ctx.writeAndFlush(response);

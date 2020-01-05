@@ -1,7 +1,7 @@
 package com.bonc.common.core.util;
 
 
-import com.bonc.common.core.constant.CommonConstants;
+import com.bonc.common.core.constant.CommonConsts;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -37,31 +37,31 @@ public class R<T> implements Serializable {
 	private T data;
 
 	public static <T> R<T> ok() {
-		return restResult(null, CommonConstants.SUCCESS, CommonConstants.SUCCESS_MSG);
+		return restResult(null, CommonConsts.SUCCESS, CommonConsts.SUCCESS_MSG);
 	}
 
 	public static <T> R<T> ok(T data) {
-		return restResult(data, CommonConstants.SUCCESS, CommonConstants.SUCCESS_MSG);
+		return restResult(data, CommonConsts.SUCCESS, CommonConsts.SUCCESS_MSG);
 	}
 
 	public static <T> R<T> ok(T data, String msg) {
-		return restResult(data, CommonConstants.SUCCESS, msg);
+		return restResult(data, CommonConsts.SUCCESS, msg);
 	}
 
 	public static <T> R<T> failed() {
-		return restResult(null, CommonConstants.FAILED, CommonConstants.FAILED_SUCCESS);
+		return restResult(null, CommonConsts.FAILED, CommonConsts.FAILED_SUCCESS);
 	}
 
 	public static <T> R<T> failed(String msg) {
-		return restResult(null, CommonConstants.FAILED, msg);
+		return restResult(null, CommonConsts.FAILED, msg);
 	}
 
 	public static <T> R<T> failed(T data) {
-		return restResult(data, CommonConstants.FAILED, CommonConstants.FAILED_SUCCESS);
+		return restResult(data, CommonConsts.FAILED, CommonConsts.FAILED_SUCCESS);
 	}
 
 	public static <T> R<T> failed(T data, String msg) {
-		return restResult(data, CommonConstants.FAILED, msg);
+		return restResult(data, CommonConsts.FAILED, msg);
 	}
 
 	private static <T> R<T> restResult(T data, int code, String msg) {

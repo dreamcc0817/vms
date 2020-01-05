@@ -1,5 +1,8 @@
 package com.bonc.common.log.event;
 
+import com.bonc.upms.entity.SysLog;
+import org.springframework.context.ApplicationEvent;
+
 /**
  * @Title: vms
  * @Package: com.bonc.common.log.aspect
@@ -8,6 +11,9 @@ package com.bonc.common.log.event;
  * @Date: 2019/12/12 16:17
  * @Version: V1.0
  */
-public class SysLogEvent {
+public class SysLogEvent extends ApplicationEvent {
 
+	public SysLogEvent(SysLog source) {
+		super(source);
+	}
 }

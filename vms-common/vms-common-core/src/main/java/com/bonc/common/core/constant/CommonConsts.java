@@ -8,7 +8,7 @@ package com.bonc.common.core.constant;
  * @Date: 2019/12/12 15:26
  * @Version: V1.0
  */
-public interface CommonConstants {
+public interface CommonConsts {
 	/**
 	 * 成功标识
 	 */

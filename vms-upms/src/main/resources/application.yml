@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: umps
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.12.191.184:3306/vms?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: dreamcc@2020

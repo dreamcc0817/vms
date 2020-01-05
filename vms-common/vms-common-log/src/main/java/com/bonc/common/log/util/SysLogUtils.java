@@ -1,5 +1,6 @@
 package com.bonc.common.log.util;
 
+import com.bonc.upms.entity.SysLog;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -12,4 +13,10 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class SysLogUtils {
+
+
+	public SysLog getSysLog() {
+		SysLog sysLog = new SysLog();
+		return sysLog;
+	}
 }

@@ -11,6 +11,11 @@
 
     <artifactId>vms-common-log</artifactId>
     <dependencies>
+        <dependency>
+            <artifactId>vms-upms</artifactId>
+            <groupId>com.bonc</groupId>
+            <version>${revision}</version>
+        </dependency>
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -30,6 +35,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--hibernate-validator-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
 

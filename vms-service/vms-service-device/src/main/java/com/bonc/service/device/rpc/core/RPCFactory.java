@@ -3,7 +3,7 @@ package com.bonc.service.device.rpc.core;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.bonc.common.core.constant.CommonConstants;
+import com.bonc.common.core.constant.CommonConsts;
 import com.bonc.service.device.rpc.client.NettyClient;
 import com.bonc.service.device.rpc.dataBridge.Request;
 import com.bonc.service.device.rpc.dataBridge.Response;
@@ -58,7 +58,7 @@ public class RPCFactory<T> implements InvocationHandler {
 
 		Response response = JSONUtil.toBean(result.toString(),Response.class);
 		//判断返回结果
-		if(response.getCode()== CommonConstants.FAILED){
+		if(response.getCode()== CommonConsts.FAILED){
 			log.error("发生异常:{}",response.getErrorMsg());
 			throw new Exception(response.getErrorMsg());
 		}
