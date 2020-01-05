@@ -1,11 +1,10 @@
 package com.bonc.vms.gateway.handler;
 
 import com.bonc.vms.gateway.cache.IoTDeviceCache;
+import com.bonc.vms.gateway.entity.GlobalInfo;
+import com.bonc.vms.gateway.entity.RTUChannelInfo;
 import com.bonc.vms.gateway.util.IoTStringUtil;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -43,9 +42,25 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	private static NettyServerHandler nettyServerHandler;
 
 	@PostConstruct
-	public void init(){
+	public void init() {
 		nettyServerHandler = this;
 	}
+
+	/**
+	 * 通道注册
+	 *
+	 * @param  ctx ctx
+	 * @throws Exception Exception
+	 */
+	@Override
+	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+		log.info("【网关】 网关收到注册信息Channel active {}",ctx.channel());
+		ChannelId channelId = ctx.channel().id();
+		RTUChannelInfo channelInfo = GlobalInfo.CHANNEL_INFO_MAP.getOrDefault(channelId,RTUChannelInfo.builder().sn("unknowSN").channelId(channelId).build());
+		GlobalInfo.CHANNEL_INFO_MAP.put(channelId, channelInfo);
+		ctx.fireChannelRegistered();
+	}
+
 	/**
 	 * 客户端连接时触发
 	 *
@@ -55,7 +70,6 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		super.channelActive(ctx);
-		log.info("【网关】 网关收到注册信息Channel active ......");
 		//获取Channel信息
 		Channel channel = ctx.channel();
 		//获取IP地址
@@ -77,7 +91,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		log.info("【网关】 收到消息：{}", msg.toString());
 		//发送至mq
-		if(msg != null){
+		if (msg != null) {
 			nettyServerHandler.source.output().send(MessageBuilder.withPayload(msg).build());
 		}
 	}
@@ -92,14 +106,14 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * 发生异常时触发
 	 *
-	 * @param ctx ChannelHandlerContext
+	 * @param ctx   ChannelHandlerContext
 	 * @param cause 异常原因
 	 * @throws Exception NettyServerHandler异常捕获
 	 */
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		super.exceptionCaught(ctx, cause);
-		log.error("【网关】 发生异常：{}",cause.getMessage());
+		log.error("【网关】 发生异常：{}", cause.getMessage());
 		cause.printStackTrace();
 		ctx.close();
 	}
