@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @Version: V1.0
  */
 @Slf4j
-@Service
+@Service("serverUnitRefService")
 @AllArgsConstructor
 public class ServerUnitRefServiceImpl extends ServiceImpl<ServerUnitRefMapper, ServerUnitRef> implements IServerUnitRefService {
 }

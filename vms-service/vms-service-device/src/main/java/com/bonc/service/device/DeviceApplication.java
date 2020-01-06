@@ -2,6 +2,8 @@ package com.bonc.service.device;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Sink;
 
 /**
  * @Title: vms
@@ -12,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version: V1.0
  */
 @SpringBootApplication
-//@EnableBinding({Sink.class})
+@EnableBinding({Sink.class})
 public class DeviceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DeviceApplication.class, args);

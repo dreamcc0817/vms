@@ -13,9 +13,13 @@ import com.bonc.service.device.entity.ServerUnit;
  */
 public interface IServerUnitService extends IService<ServerUnit> {
 	/**
-	 * 检测设备在线状态
-	 * @param message mq消息
-	 * @return 状态
+	 * 修改服务单元状态
+	 *
+	 * @param host    ip地址
+	 * @param type  设备类型
+	 * @param port  端口号
+	 * @param state 状态
+	 * @return 0失败/1成功
 	 */
-	Integer checkDeviceState(String message);
+	Integer modifyUnitState(String host, Integer type, Integer port, Integer state);
 }

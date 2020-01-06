@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bonc.service.device.mapper.ServerUnitMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bonc.service.device.entity.ServerUnit">
+        <id column="id" property="id"/>
+        <result column="unit_name" property="unitName"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        unit.id ,unit_name AS unitName,port ,type,load_num AS loadNum,unit.state
+    </sql>
+
+    <!-- 通过IP与类型查找服务单元 -->
+    <select id="findByIpAndType" resultType="com.bonc.service.device.entity.ServerUnit">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM device_unit unit
+        INNER JOIN device_server_unit_ref ref ON unit.id = ref.unit_id
+        INNER JOIN device_server server ON server_id = ref.server_id
+        WHERE
+        server.host = #{host} AND unit.type = #{type}
+
+    </select>
+</mapper>

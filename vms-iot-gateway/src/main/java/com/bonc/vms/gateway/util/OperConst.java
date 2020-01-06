@@ -17,15 +17,19 @@ public class OperConst {
 	 */
 	@Getter
 	@AllArgsConstructor
-	public enum DeviceOper{
+	public enum DeviceOper {
+		/**
+		 * 设备注册
+		 */
+		REGISTER(1500, "设备注册"),
 		/**
 		 * Ping任务
 		 */
-		PING("10025","设备Ping任务初始化化失败");
+		PING(10025, "设备Ping任务初始化化失败");
 		/**
 		 * 操作代码
 		 */
-		private String code;
+		private Integer code;
 		/**
 		 * 操作消息
 		 */
@@ -37,15 +41,15 @@ public class OperConst {
 	 */
 	@Getter
 	@AllArgsConstructor
-	public enum EnDeCoder{
+	public enum EnDeCoder {
 		/**
 		 * 解析XML异常
 		 */
-		DECODER_XML_ERROR("10020","解析XML异常");
+		DECODER_XML_ERROR(10020, "解析XML异常");
 		/**
 		 * 操作代码
 		 */
-		private String code;
+		private Integer code;
 		/**
 		 * 操作消息
 		 */

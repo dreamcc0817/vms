@@ -12,5 +12,5 @@ public abstract class AbstractMonitorMessage {
 	/**
 	 * 消息类型
 	 */
-	public int msgType;
+	public Integer msgType;
 }

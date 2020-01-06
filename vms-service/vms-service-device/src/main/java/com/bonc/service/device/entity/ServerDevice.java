@@ -46,7 +46,7 @@ public class ServerDevice implements Serializable {
 	 * 设备IP地址
 	 */
 	@ApiModelProperty(value = "IP地址", example = "192.168.1.1", required = true)
-	private String ipAddr;
+	private String host;
 	/**
 	 * 服务器账户信息
 	 */

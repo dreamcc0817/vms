@@ -15,7 +15,7 @@ import java.util.Arrays;
  * @Version: V1.0
  */
 @UtilityClass
-public class DeviceConst {
+public class DeviceConsts {
 
 	/**
 	 * 无效端口

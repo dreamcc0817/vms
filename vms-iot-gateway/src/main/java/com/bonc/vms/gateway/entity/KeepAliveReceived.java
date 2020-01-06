@@ -13,7 +13,7 @@ import com.bonc.vms.gateway.util.Const;
 public class KeepAliveReceived extends AbstractMonitorMessageReceived{
 
 	public KeepAliveReceived(){
-		super.msgType= Const.Gateway.RPC_HEART_BEAT.getValue();
+		super.msgType= Const.Gateway.RPC_HEART_BEAT.getCode();
 	}
 
 	@Override

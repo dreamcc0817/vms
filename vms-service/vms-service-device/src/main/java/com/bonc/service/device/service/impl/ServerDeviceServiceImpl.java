@@ -10,7 +10,7 @@ import com.bonc.service.device.mapper.ServerDeviceMapper;
 import com.bonc.service.device.service.IServerDeviceService;
 import com.bonc.service.device.service.IServerUnitRefService;
 import com.bonc.service.device.service.IServerUnitService;
-import com.bonc.service.device.util.DeviceConst;
+import com.bonc.service.device.util.DeviceConsts;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @Version: V1.0
  */
 @Slf4j
-@Service
+@Service("serverDeviceService")
 @AllArgsConstructor
 public class ServerDeviceServiceImpl extends ServiceImpl<ServerDeviceMapper, ServerDevice> implements IServerDeviceService {
 
@@ -67,11 +67,11 @@ public class ServerDeviceServiceImpl extends ServiceImpl<ServerDeviceMapper, Ser
 				.stream()
 				.map(unitType -> {
 					ServerUnit serverUnit = new ServerUnit();
-					serverUnit.setUnitName(serverDevice.getServerName() + "_" + DeviceConst.UnitType.getName(unitType));
+					serverUnit.setUnitName(serverDevice.getServerName() + "_" + DeviceConsts.UnitType.getName(unitType));
 					serverUnit.setType(unitType);
-					serverUnit.setPort(DeviceConst.INVALID_PORT);
-					serverUnit.setLoadNum(DeviceConst.LOAD_DUFAULT);
-					serverUnit.setState(DeviceConst.OFF_ONLINE);
+					serverUnit.setPort(DeviceConsts.INVALID_PORT);
+					serverUnit.setLoadNum(DeviceConsts.LOAD_DUFAULT);
+					serverUnit.setState(DeviceConsts.OFF_ONLINE);
 					serverUnit.setCreateTime(LocalDateTime.now());
 					return serverUnit;
 				})

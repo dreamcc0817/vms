@@ -3,6 +3,7 @@ package com.bonc.vms.gateway.handler;
 import com.bonc.vms.gateway.cache.IoTDeviceCache;
 import com.bonc.vms.gateway.entity.GlobalInfo;
 import com.bonc.vms.gateway.entity.RTUChannelInfo;
+import com.bonc.vms.gateway.mq.BaseMqSend;
 import com.bonc.vms.gateway.util.IoTStringUtil;
 import io.netty.channel.*;
 import lombok.Data;
@@ -92,14 +93,17 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 		log.info("【网关】 收到消息：{}", msg.toString());
 		//发送至mq
 		if (msg != null) {
-			nettyServerHandler.source.output().send(MessageBuilder.withPayload(msg).build());
+			InetSocketAddress inetSocketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
+			//格式化IP地址
+			String ipAddress = IoTStringUtil.formatIpAddress(inetSocketAddress.getHostString(), String.valueOf(inetSocketAddress.getPort()));
+			BaseMqSend baseMqSend = BaseMqSend.builder().ip(ipAddress).msg(msg).build();
+			nettyServerHandler.source.output().send(MessageBuilder.withPayload(baseMqSend).build());
 		}
 	}
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		log.info("【网关】 读取消息完毕 ......");
-
 
 	}
 

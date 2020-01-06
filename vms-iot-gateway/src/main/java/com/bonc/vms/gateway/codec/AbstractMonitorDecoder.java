@@ -27,27 +27,26 @@ public class AbstractMonitorDecoder<T extends AbstractMonitorMessageReceived> ex
 	/**
 	 * 解码
 	 *
-	 * @param ctx
-	 * @param in
-	 * @param out
-	 * @throws Exception
+	 * @param ctx ctx
+	 * @param in 接收消息
+	 * @param out 输出消息
+	 * @throws Exception Exception
 	 */
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 
 		//HEAD_LENGTH是我们用于表示头长度的字节
-		if (in.readableBytes() < Const.XMLFramework.HEAD_LENGTH.getValue()) {
+		if (in.readableBytes() < Const.XMLFramework.HEAD_LENGTH.getCode()) {
 			// 数据长度小于头，继续收数据
 			return;
 		}
 		//验证消息头
 		HeaderModel headerModel = decoderHeader(in);
 		//验证报文版本
-		if (headerModel.getVersion() != Const.XMLFramework.VERSION.getValue()) {
+		if (headerModel.getVersion() != Const.XMLFramework.VERSION.getCode()) {
 			log.error("【网关】 报文版本与服务器不一致......");
 			ctx.close();
 		}
-		out.add(headerModel);
 		//标记当前readIndex的位置
 		in.markReaderIndex();
 		//读取传送过来的消息的长度，返回当前readerIndex的int值，并将readerIndex增加4
@@ -65,7 +64,7 @@ public class AbstractMonitorDecoder<T extends AbstractMonitorMessageReceived> ex
 		byte[] body = new byte[dataLength];
 		in.readBytes(body);
 		String xmlStr = new String(body);
-		Map map = XmlUtil.xmlToMap(xmlStr);
+		Map<String, Object> map = XmlUtil.xmlToMap(xmlStr);
 		out.add(map);
 	}
 
