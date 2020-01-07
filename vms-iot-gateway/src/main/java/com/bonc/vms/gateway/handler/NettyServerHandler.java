@@ -4,6 +4,7 @@ import com.bonc.vms.gateway.cache.IoTDeviceCache;
 import com.bonc.vms.gateway.entity.GlobalInfo;
 import com.bonc.vms.gateway.entity.RTUChannelInfo;
 import com.bonc.vms.gateway.mq.BaseMqSend;
+import com.bonc.vms.gateway.mq.VMSSource;
 import com.bonc.vms.gateway.util.Const;
 import com.bonc.vms.gateway.util.IoTStringUtil;
 import com.bonc.vms.gateway.util.OperConst;
@@ -13,7 +14,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
@@ -43,7 +43,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
 
 	@Autowired
-	private Source source;
+	private VMSSource source;
 
 	private static NettyServerHandler nettyServerHandler;
 

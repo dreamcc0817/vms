@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: iot-gateway
+  cloud:
+    stream:
+      # 配置rocketmq的nameserver地址
+      rocketmq:
+        binder:
+          name-server: 106.12.191.184:9876
+        bindinds:
+          vms-output:
+            destination: vms-topic
+netty:
+  bossThreads: 10
+  worker-threads: 50
+  port: 9999
+rpc:
+  boss-threads: 10
+  worker-threads: 50
+  port: 9888

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.cloud.stream.rocketmq.bindinds.vms-output.destination",
+      "type": "java.lang.String",
+      "description": "Description for spring.cloud.stream.rocketmq.bindinds.vms-output.destination."
+  }
+] }

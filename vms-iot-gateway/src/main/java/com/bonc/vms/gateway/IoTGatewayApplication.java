@@ -1,9 +1,9 @@
 package com.bonc.vms.gateway;
 
+import com.bonc.vms.gateway.mq.VMSSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
 
 /**
  * @Title: vms
@@ -13,7 +13,7 @@ import org.springframework.cloud.stream.messaging.Source;
  * @Date: 2019/12/6 13:43
  * @Version: V1.0
  */
-@EnableBinding(Source.class)
+@EnableBinding(VMSSource.class)
 @SpringBootApplication
 public class IoTGatewayApplication {
 	public static void main(String[] args) {
