@@ -12,6 +12,12 @@ import lombok.Getter;
  * @Version: V1.0
  */
 public class OperConst {
+
+	/**
+	 * 操作类型
+	 */
+	public final static String CMD_TYPE = "CmdType";
+
 	/**
 	 * 设备操作
 	 */
@@ -21,7 +27,11 @@ public class OperConst {
 		/**
 		 * 设备注册
 		 */
-		REGISTER(1500, "设备注册"),
+		REGISTER(1500, "Register"),
+		/**
+		 * 心跳检测
+		 */
+		KEEP_ALIVE(1501,"Keepalive"),
 		/**
 		 * Ping任务
 		 */
@@ -33,7 +43,7 @@ public class OperConst {
 		/**
 		 * 操作消息
 		 */
-		private String msg;
+		private String value;
 	}
 
 	/**

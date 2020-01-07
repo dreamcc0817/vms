@@ -69,5 +69,8 @@ public class Const {
 	 * 厂家
 	 */
 	public static final String XMLFRAMEWORK_COMPANY_TYPE= "BST.";
-
+	/**
+	 * 设备在线状态
+	 */
+	public static final int DEVICE_ONLINE = 1;
 }

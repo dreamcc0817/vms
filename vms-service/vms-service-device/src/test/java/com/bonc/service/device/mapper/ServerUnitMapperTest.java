@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
@@ -30,14 +31,14 @@ public class ServerUnitMapperTest extends BaseTest {
 	private IServerDeviceService serverDeviceService;
 
 	@Test
-	//@Rollback
+	@Transactional
 	public void findByIpAndType() {
 		String host = "192.168.1.111";
 		Integer type = 1;
 		ServerDeviceDTO serverDeviceDTO = new ServerDeviceDTO();
 		serverDeviceDTO.setHost(host);
 		serverDeviceDTO.setServerUnitType(Collections.singletonList(type));
-		//serverDeviceService.addServerDevice(serverDeviceDTO);
+		serverDeviceService.addServerDevice(serverDeviceDTO);
 		ServerUnit serverUnit = serverUnitMapper.findByIpAndType(host, type);
 		Assert.assertNotNull(serverUnit);
 	}

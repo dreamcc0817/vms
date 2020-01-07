@@ -29,5 +29,5 @@ public class BaseMqSend {
 	/**
 	 * 设备状态
 	 */
-	private String state;
+	private Integer state;
 }

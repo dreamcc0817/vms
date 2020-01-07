@@ -4,7 +4,9 @@ import com.bonc.vms.gateway.cache.IoTDeviceCache;
 import com.bonc.vms.gateway.entity.GlobalInfo;
 import com.bonc.vms.gateway.entity.RTUChannelInfo;
 import com.bonc.vms.gateway.mq.BaseMqSend;
+import com.bonc.vms.gateway.util.Const;
 import com.bonc.vms.gateway.util.IoTStringUtil;
+import com.bonc.vms.gateway.util.OperConst;
 import io.netty.channel.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,11 +14,14 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -50,14 +55,14 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * 通道注册
 	 *
-	 * @param  ctx ctx
+	 * @param ctx ctx
 	 * @throws Exception Exception
 	 */
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-		log.info("【网关】 网关收到注册信息Channel active {}",ctx.channel());
+		log.info("【网关】 网关收到注册信息Channel active {}", ctx.channel());
 		ChannelId channelId = ctx.channel().id();
-		RTUChannelInfo channelInfo = GlobalInfo.CHANNEL_INFO_MAP.getOrDefault(channelId,RTUChannelInfo.builder().sn("unknowSN").channelId(channelId).build());
+		RTUChannelInfo channelInfo = GlobalInfo.CHANNEL_INFO_MAP.getOrDefault(channelId, RTUChannelInfo.builder().sn("unknowSN").channelId(channelId).build());
 		GlobalInfo.CHANNEL_INFO_MAP.put(channelId, channelInfo);
 		ctx.fireChannelRegistered();
 	}
@@ -91,13 +96,16 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		log.info("【网关】 收到消息：{}", msg.toString());
-		//发送至mq
-		if (msg != null) {
-			InetSocketAddress inetSocketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
-			//格式化IP地址
-			String ipAddress = IoTStringUtil.formatIpAddress(inetSocketAddress.getHostString(), String.valueOf(inetSocketAddress.getPort()));
-			BaseMqSend baseMqSend = BaseMqSend.builder().ip(ipAddress).msg(msg).build();
-			nettyServerHandler.source.output().send(MessageBuilder.withPayload(baseMqSend).build());
+		InetSocketAddress inetSocketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
+		//格式化IP地址
+		String ipAddress = IoTStringUtil.formatIpAddress(inetSocketAddress.getHostString(), String.valueOf(inetSocketAddress.getPort()));
+		BaseMqSend baseMqSend = BaseMqSend.builder().ip(ipAddress).msg(msg).state(Const.DEVICE_ONLINE).build();
+		Message<BaseMqSend> build = MessageBuilder.withPayload(baseMqSend).build();
+		Map<String, String> msg1 = (HashMap) msg;
+		//注册时发送消息至MQ
+		if (msg1.get(OperConst.CMD_TYPE) != null && msg1.get(OperConst.CMD_TYPE).equals(OperConst.DeviceOper.REGISTER.getValue())) {
+			nettyServerHandler.source.output().send(build);
+			log.info("【MQ】 发生消息{}完毕 ......", build);
 		}
 	}
 

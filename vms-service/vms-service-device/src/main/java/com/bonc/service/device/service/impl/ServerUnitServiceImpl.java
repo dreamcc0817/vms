@@ -38,6 +38,7 @@ public class ServerUnitServiceImpl extends ServiceImpl<ServerUnitMapper, ServerU
 	public Integer modifyUnitState(String host, Integer type, Integer port, Integer state) {
 		ServerUnit serverUnit = serverUnitMapper.findByIpAndType(host, type);
 		serverUnit.setState(state);
+		serverUnit.setPort(port);
 		//设备状态不在线时设置为无效端口
 		if (DeviceConsts.OFF_ONLINE.equals(state)) {
 			serverUnit.setPort(DeviceConsts.INVALID_PORT);
