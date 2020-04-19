@@ -2,6 +2,7 @@ package com.bonc.common.core.util;
 
 
 import com.bonc.common.core.constant.CommonConsts;
+import com.bonc.common.core.constant.SecurityConsts;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -62,6 +63,19 @@ public class R<T> implements Serializable {
 
 	public static <T> R<T> failed(T data, String msg) {
 		return restResult(data, CommonConsts.FAILED, msg);
+	}
+
+	/**
+	 * 未授权返回结果
+	 */
+	public static <T> R<T> forbidden(T data) {
+		return restResult(data, SecurityConsts.ResultCode.FORBIDDEN.getCode(), SecurityConsts.ResultCode.FORBIDDEN.getMessage());
+	}
+	/**
+	 * 未授权返回结果
+	 */
+	public static <T> R<T> unauthorized(T data) {
+		return restResult(data, SecurityConsts.ResultCode.UNAUTHORIZED.getCode(), SecurityConsts.ResultCode.UNAUTHORIZED.getMessage());
 	}
 
 	private static <T> R<T> restResult(T data, int code, String msg) {

@@ -12,5 +12,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Version: V1.0
  */
 public interface ISysUserService extends IService<SysUser> {
-
+	/**
+	 * 登录功能
+	 *
+	 * @param username 用户名
+	 * @param password 密码
+	 * @return 生成的JWT的token
+	 */
+	String login(String username, String password);
 }
