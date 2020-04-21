@@ -1,8 +1,11 @@
 package com.bonc.upms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bonc.upms.entity.SysResource;
 import com.bonc.upms.entity.SysUser;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
 
 /**
  * @Title: vms
@@ -23,7 +26,18 @@ public interface ISysUserService extends IService<SysUser> {
 	String login(String username, String password);
 
 	/**
-	 * 获取用户信息
+	 * 根据用户名获取用户信息
+	 *
+	 * @param username 用户名
+	 * @return 用户信息
 	 */
 	UserDetails loadUserByUsername(String username);
+
+	/**
+	 * 获取指定用户的可访问资源
+	 * @param userId 用户ID
+	 * @return 用户可访问资源
+	 */
+	List<SysResource> getResourceList(Long userId);
+
 }

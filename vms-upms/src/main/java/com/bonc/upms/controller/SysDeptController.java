@@ -1,6 +1,9 @@
 package com.bonc.upms.controller;
 
 
+import com.bonc.common.core.util.R;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -17,4 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/upms/sys-dept")
 public class SysDeptController {
 
+	@PreAuthorize("hasAuthority('upms:dept:insert')")
+	@PostMapping("/insert")
+	public R insertSysDept(){
+		return R.ok();
+	}
 }

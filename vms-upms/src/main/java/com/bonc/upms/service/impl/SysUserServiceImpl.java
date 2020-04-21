@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bonc.common.security.util.JwtTokenUtil;
 import com.bonc.upms.dto.SysUserDetailsDTO;
+import com.bonc.upms.entity.SysResource;
 import com.bonc.upms.entity.SysUser;
 import com.bonc.upms.mapper.SysUserMapper;
 import com.bonc.upms.service.ISysUserService;
@@ -13,8 +14,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Title: vms
@@ -43,7 +47,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		String token = null;
 		try {
 			UserDetails userDetails = loadUserByUsername(username);
-			if(!new BCryptPasswordEncoder().matches(password,userDetails.getPassword())){
+			if (!new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
 				throw new BadCredentialsException("密码不正确");
 			}
 			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
@@ -51,7 +55,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			token = jwtTokenUtil.generateToken(userDetails);
 		} catch (BadCredentialsException e) {
-			log.warn("登录异常：{}",e.getMessage());
+			log.warn("登录异常：{}", e.getMessage());
 		}
 		return token;
 	}
@@ -65,7 +69,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		SysUser sysUser = this.getOne(Wrappers.<SysUser>query().lambda()
-			.eq(SysUser::getUsername,username));
-		return new SysUserDetailsDTO(sysUser);
+				.eq(SysUser::getUsername, username));
+		if (sysUser != null) {
+			List<SysResource> sysResources = getResourceList(sysUser.getUserId());
+			return new SysUserDetailsDTO(sysUser, sysResources);
+		}
+		throw new UsernameNotFoundException("用户名或密码错误");
+	}
+
+	/**
+	 * 获取指定用户的可访问资源
+	 *
+	 * @param userId 用户ID
+	 * @return 用户可访问资源
+	 */
+	@Override
+	public List<SysResource> getResourceList(Long userId) {
+		return null;
 	}
 }

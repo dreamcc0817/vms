@@ -1,12 +1,15 @@
 package com.bonc.upms.dto;
 
+import com.bonc.upms.entity.SysResource;
 import com.bonc.upms.entity.SysUser;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Title: vms
@@ -20,11 +23,13 @@ import java.util.Collection;
 public class SysUserDetailsDTO implements UserDetails {
 
 	private SysUser sysUser;
-
+	private List<SysResource> sysResourceList;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.commaSeparatedStringToAuthorityList("");
+		return sysResourceList.stream()
+				.map(role->new SimpleGrantedAuthority(role.getResourceId()+":"+role.getName()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
