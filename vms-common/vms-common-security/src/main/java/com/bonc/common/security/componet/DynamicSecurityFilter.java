@@ -1,6 +1,6 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
-import com.cms.common.security.config.IgnoreUrlsConfig;
+import com.bonc.common.security.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -22,6 +22,7 @@ import java.io.IOException;
  * @Date: 2020/4/19 18:25
  * @Version: V1.0
  */
+//@Component
 public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
 	@Autowired

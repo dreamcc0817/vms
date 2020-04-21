@@ -1,4 +1,4 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
 import cn.hutool.core.collection.CollUtil;
 import org.springframework.security.access.AccessDecisionManager;
@@ -19,6 +19,8 @@ import java.util.Iterator;
  * @Date: 2020/4/19 18:57
  * @Version: V1.0
  */
+//@Component
+//@ConditionalOnBean(name = "dynamicSecurityService")
 public class DynamicAccessDecisionManager implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object,

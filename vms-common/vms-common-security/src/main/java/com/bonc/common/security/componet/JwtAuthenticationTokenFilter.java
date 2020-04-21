@@ -1,6 +1,6 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
-import com.cms.common.security.util.JwtTokenUtil;
+import com.bonc.common.security.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +26,7 @@ import java.io.IOException;
  * @Version: V1.0
  */
 @Slf4j
+//@Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 	@Autowired
@@ -35,17 +36,19 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	private String tokenHeader;
 	@Value("${jwt.tokenHead}")
 	private String tokenHead;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 		String authHeader = request.getHeader(this.tokenHeader);
 		if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
 			String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
-			String username = JwtTokenUtil.getUserNameFromToken(authToken);
+			String username = jwtTokenUtil.getUserNameFromToken(authToken);
 			log.info("checking username:{}", username);
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-				if (JwtTokenUtil.validateToken(authToken, userDetails)) {
+				if (jwtTokenUtil.validateToken(authToken, userDetails)) {
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					log.info("authenticated user:{}", username);

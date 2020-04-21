@@ -1,11 +1,14 @@
 package com.bonc.upms.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_ID;
 
 /**
  * @Title: vms
@@ -25,6 +28,7 @@ public class SysMenu implements Serializable {
     /**
      * 菜单ID
      */
+    @TableId(value = "dept_id", type = ASSIGN_ID)
     private Long menuId;
 
     /**

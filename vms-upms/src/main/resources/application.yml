@@ -3,6 +3,31 @@ spring:
     name: umps
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.12.191.184:3306/vms?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    url: jdbc:mysql://106.12.191.184:3306/vms?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: dreamcc@2020
+    password: root
+server:
+  port: 8089
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: Bearer  #JWT负载中拿到开头
+
+#secure:
+#  ignored:
+#    urls: #安全路径白名单
+#      - /swagger-ui.html
+#      - /swagger-resources/**
+#      - /swagger/**
+#      - /**/v2/api-docs
+#      - /**/*.js
+#      - /**/*.css
+#      - /**/*.png
+#      - /**/*.ico
+#      - /webjars/springfox-swagger-ui/**
+#      - /druid/**
+#      - /actuator/**
+#      - /sso/**
+#      - /home/**
+#      - /upms/sys-user/login

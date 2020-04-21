@@ -1,10 +1,9 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
 import cn.hutool.json.JSONUtil;
 import com.bonc.common.core.util.R;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.io.IOException;
  * @Date: 2020/4/19 17:51
  * @Version: V1.0
  */
-@Component
+//@Component
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {

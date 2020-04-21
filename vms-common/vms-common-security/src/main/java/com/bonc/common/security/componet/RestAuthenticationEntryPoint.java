@@ -1,4 +1,4 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
 import cn.hutool.json.JSONUtil;
 import com.bonc.common.core.util.R;
@@ -18,6 +18,7 @@ import java.io.IOException;
  * @Date: 2020/4/19 18:16
  * @Version: V1.0
  */
+//@Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest httpServletRequest, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {

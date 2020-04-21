@@ -1,7 +1,8 @@
 package com.bonc.upms.service;
 
-import com.bonc.upms.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bonc.upms.entity.SysUser;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @Title: vms
@@ -20,4 +21,9 @@ public interface ISysUserService extends IService<SysUser> {
 	 * @return 生成的JWT的token
 	 */
 	String login(String username, String password);
+
+	/**
+	 * 获取用户信息
+	 */
+	UserDetails loadUserByUsername(String username);
 }

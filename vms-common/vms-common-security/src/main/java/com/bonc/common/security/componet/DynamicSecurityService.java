@@ -1,4 +1,4 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
 import org.springframework.security.access.ConfigAttribute;
 

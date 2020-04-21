@@ -1,4 +1,4 @@
-package com.cms.common.security.componet;
+package com.bonc.common.security.componet;
 
 import cn.hutool.core.util.URLUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,8 @@ import java.util.Map;
  * @Date: 2020/4/19 18:33
  * @Version: V1.0
  */
+//@Component
+//@ConditionalOnBean(name = "dynamicSecurityService")
 public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	private Map<String, ConfigAttribute> configAttributeMap = null;

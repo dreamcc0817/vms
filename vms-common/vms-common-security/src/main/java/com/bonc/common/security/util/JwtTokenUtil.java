@@ -1,14 +1,14 @@
-package com.cms.common.security.util;
+package com.bonc.common.security.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,10 +20,9 @@ import java.util.Map;
  * @Version: V1.0
  */
 @Slf4j
-@UtilityClass
 public class JwtTokenUtil {
-	private final String CLAIM_KEY_USERNAME = "sub";
-	private final String CLAIM_KEY_CREATED = "created";
+	private static final String CLAIM_KEY_USERNAME = "sub";
+	private static final String CLAIM_KEY_CREATED = "created";
 	@Value("${jwt.secret}")
 	private String secret;
 	@Value("${jwt.expiration}")
@@ -38,12 +37,25 @@ public class JwtTokenUtil {
 	 * @param claims claims
 	 * @return token
 	 */
-	private String generateToken(Map<String, Object> claims) {
+	public String generateToken(Map<String, Object> claims) {
 		return Jwts.builder()
 				.setClaims(claims)
 				.setExpiration(generateExpirationDate())
 				.signWith(SignatureAlgorithm.HS512, secret)
 				.compact();
+	}
+
+	/**
+	 * 根据用户信息生成token
+	 *
+	 * @param userDetails 用户信息
+	 * @return token
+	 */
+	public String generateToken(UserDetails userDetails) {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+		claims.put(CLAIM_KEY_CREATED, new Date());
+		return generateToken(claims);
 	}
 
 	/**
@@ -71,7 +83,8 @@ public class JwtTokenUtil {
 	 * @return token的过期时间
 	 */
 	private Date generateExpirationDate() {
-		return new Date(System.currentTimeMillis() + expiration * 1000);
+		//return new Date(System.currentTimeMillis() + expiration * 1000);
+		return new Date(System.currentTimeMillis() +   1000);
 	}
 
 	/**
