@@ -28,20 +28,21 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
 			throws AccessDeniedException, InsufficientAuthenticationException {
 		if (CollUtil.isEmpty(configAttributes)) {
 			//当接口未被配置资源是直接放行
-		} else {
-			Iterator<ConfigAttribute> iterator = configAttributes.iterator();
-			while (iterator.hasNext()) {
-				ConfigAttribute configAttribute = iterator.next();
-				//将访问所需资源或用户拥有资源进行比对
-				String needAuthority = configAttribute.getAttribute();
-				for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-					if (needAuthority.trim().equals(grantedAuthority.getAuthority())) {
-						return;
-					}
+			return;
+		}
+		Iterator<ConfigAttribute> iterator = configAttributes.iterator();
+		while (iterator.hasNext()) {
+			ConfigAttribute configAttribute = iterator.next();
+			//将访问所需资源或用户拥有资源进行比对
+			String needAuthority = configAttribute.getAttribute();
+			for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
+				if (needAuthority.trim().equals(grantedAuthority.getAuthority())) {
+					return;
 				}
 			}
-			throw new AccessDeniedException("抱歉，您没有访问权限");
 		}
+		throw new AccessDeniedException("抱歉，您没有访问权限");
+
 	}
 
 	@Override

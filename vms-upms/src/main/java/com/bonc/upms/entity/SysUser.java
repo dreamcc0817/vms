@@ -2,6 +2,7 @@ package com.bonc.upms.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -43,6 +44,7 @@ public class SysUser implements Serializable {
     /**
      * 随机盐
      */
+    @JsonIgnore
     private String salt;
 
     /**

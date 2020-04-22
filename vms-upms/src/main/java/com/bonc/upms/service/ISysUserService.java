@@ -1,6 +1,7 @@
 package com.bonc.upms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bonc.upms.dto.SysUserDTO;
 import com.bonc.upms.entity.SysResource;
 import com.bonc.upms.entity.SysUser;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,14 @@ public interface ISysUserService extends IService<SysUser> {
 	String login(String username, String password);
 
 	/**
+	 * 刷新token
+	 *
+	 * @param oldToken 旧token
+	 * @return token
+	 */
+	String refreshToken(String oldToken);
+
+	/**
 	 * 根据用户名获取用户信息
 	 *
 	 * @param username 用户名
@@ -34,10 +43,25 @@ public interface ISysUserService extends IService<SysUser> {
 	UserDetails loadUserByUsername(String username);
 
 	/**
+	 * 根据用户名获取用户信息
+	 *
+	 * @param username 用户名
+	 * @return 用户信息
+	 */
+	SysUser getSysUserByUsername(String username);
+
+	/**
 	 * 获取指定用户的可访问资源
+	 *
 	 * @param userId 用户ID
 	 * @return 用户可访问资源
 	 */
 	List<SysResource> getResourceList(Long userId);
 
+	/**
+	 * 注册用户信息
+	 *
+	 * @param userDTO 用户信息
+	 */
+	SysUser register(SysUserDTO userDTO);
 }
