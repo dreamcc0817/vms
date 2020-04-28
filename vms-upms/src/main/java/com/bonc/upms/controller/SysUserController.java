@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,10 +63,10 @@ public class SysUserController {
 	 */
 	@ApiOperation(value = "刷新token")
 	@GetMapping(value = "/refresh-token")
-	public R<Map<String,String>> refreshToken(HttpServletRequest request) {
+	public R<Map<String, String>> refreshToken(HttpServletRequest request) {
 		String token = request.getHeader(tokenHead);
 		String refreshToken = sysUserService.refreshToken(token);
-		if(refreshToken == null){
+		if (refreshToken == null) {
 			return R.failed("token过期");
 		}
 		Map<String, String> tokenMap = new HashMap<>();
@@ -74,6 +75,12 @@ public class SysUserController {
 		return R.ok(tokenMap);
 	}
 
+	/**
+	 * 获取当前登录用户信息
+	 *
+	 * @param principal 用户信息
+	 * @return 当前用户信息
+	 */
 	@ApiOperation(value = "获取当前登录用户信息")
 	@GetMapping(value = "/info")
 	public R<Map<String, Object>> getSysUserInfo(Principal principal) {
@@ -89,13 +96,35 @@ public class SysUserController {
 		return R.ok(result);
 	}
 
-	@ApiOperation(value = "获取当前登录用户信息")
+	/**
+	 * 注册用户信息
+	 *
+	 * @param userDTO    用户信息
+	 * @param bindResult 验证参数
+	 * @return 用户信息
+	 */
+	@ApiOperation(value = "注册用户信息")
 	@PostMapping(value = "/add")
-	public R register(@Validated @RequestBody SysUserDTO userDTO, BindResult bindResult){
+	public R<SysUser> register(@Validated @RequestBody SysUserDTO userDTO, BindResult bindResult) {
 		SysUser register = sysUserService.register(userDTO);
-		if(register == null){
+		if (register == null) {
 			R.failed();
 		}
 		return R.ok(register);
+	}
+
+	/**
+	 * 给用户分配权限
+	 *
+	 * @param userId        用户ID
+	 * @param permissionIds 权限ID
+	 * @return 是否成功
+	 */
+	public R<Integer> updatePermission(@RequestParam Long userId,
+									   @RequestParam("permissionIds") List<Long> permissionIds) {
+
+		int count = this.sysUserService.updatePermission(userId,permissionIds);
+
+		return R.ok();
 	}
 }

@@ -64,4 +64,13 @@ public interface ISysUserService extends IService<SysUser> {
 	 * @param userDTO 用户信息
 	 */
 	SysUser register(SysUserDTO userDTO);
+
+	/**
+	 * 给用户分配权限
+	 *
+	 * @param sysUserId     用户ID
+	 * @param permissionIds 权限ID
+	 * @return 是否分配成功
+	 */
+	int updatePermission(Long sysUserId, List<Long> permissionIds);
 }

@@ -9,6 +9,7 @@ import com.bonc.upms.dto.SysUserDetailsDTO;
 import com.bonc.upms.entity.SysResource;
 import com.bonc.upms.entity.SysUser;
 import com.bonc.upms.mapper.SysUserMapper;
+import com.bonc.upms.mapper.SysUserPermissionRelationMapper;
 import com.bonc.upms.service.ISysUserCacheService;
 import com.bonc.upms.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	private ISysUserCacheService sysUserCacheService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	@Autowired
+	private SysUserPermissionRelationMapper userPermissionRelationMapper;
 	/**
 	 * 登录功能
 	 *
@@ -144,19 +146,34 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Override
 	public SysUser register(SysUserDTO userDTO) {
 		SysUser sysUser = new SysUser();
-		BeanUtils.copyProperties(userDTO,sysUser);
+		BeanUtils.copyProperties(userDTO, sysUser);
 		sysUser.setCreateTime(LocalDateTime.now());
 		sysUser.setLockFlag(CommonConsts.STATUS_NORMAL);
 		SysUser repeatUser = this.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, userDTO.getUsername()));
-		if (repeatUser != null){
+		if (repeatUser != null) {
 			return null;
 		}
 		String encodePassword = passwordEncoder.encode(userDTO.getPassword());
 		sysUser.setPassword(encodePassword);
 		boolean save = this.save(sysUser);
-		if(save){
+		if (save) {
 			return sysUser;
 		}
 		return null;
+	}
+
+	/**
+	 * 更新用户权限
+	 *
+	 * @param sysUserId     用户ID
+	 * @param permissionIds 权限ID
+	 * @return 是否更新成功
+	 */
+	@Override
+	public int updatePermission(Long sysUserId, List<Long> permissionIds) {
+		//删除原有关系
+		int deleteResult = this.userPermissionRelationMapper.deleteByUserId(sysUserId);
+		//获取用户所有角色权限
+		return 0;
 	}
 }
