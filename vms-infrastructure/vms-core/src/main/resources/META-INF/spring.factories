@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.dreamcc.common.core.utils.SpringUtils
+
+  

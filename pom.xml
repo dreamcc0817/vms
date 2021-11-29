@@ -2,71 +2,54 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
-    <modules>
-        <module>vms-nacos</module>
-        <module>vms-common</module>
-        <module>vms-iot-gateway</module>
-        <module>vms-service</module>
-        <module>vms-gateway</module>
-        <module>vms-upms</module>
-    </modules>
 
-    <groupId>com.bonc</groupId>
+
+    <groupId>com.dreamcc</groupId>
     <artifactId>vms</artifactId>
-    <version>${revision}</version>
+    <version>v1.0</version>
     <name>vms</name>
-    <description>IoT architecture</description>
+
 
     <properties>
-        <revision>v1.0</revision>
+        <vms.version>v1.0</vms.version>
         <java.version>8</java.version>
-        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
-        <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
-        <spring-cloud.version>Greenwich.SR4</spring-cloud.version>
-        <mybatis-spring-boot-starter.version>2.1.0</mybatis-spring-boot-starter.version>
-        <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
-        <hutool.version>5.0.7</hutool.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-boot.version>2.4.1</spring-boot.version>
+        <spring-cloud.version>2020.0.4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <spring-boot-admin.version>2.5.3</spring-boot-admin.version>
+        <swagger.version>3.0.0</swagger.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
+        <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
+        <spring-plugin-core.version>2.0.0.RELEASE</spring-plugin-core.version>
+        <hutool.version>5.0.7</hutool.version>
         <netty-version>4.1.36.Final</netty-version>
         <zookeeper-version>3.4.8</zookeeper-version>
         <zkclient-version>0.11</zkclient-version>
-        <fastjson.version>1.2.47</fastjson.version>
-        <swagger.version>2.9.2</swagger.version>
+        <fastjson.version>1.2.78</fastjson.version>
+        <commons.io.version>2.11.0</commons.io.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <commons.fileupload.version>1.4</commons.fileupload.version>
+        <common-pool.version>2.10.0</common-pool.version>
+        <pagehelper.boot.version>1.4.0</pagehelper.boot.version>
+        <tobato.version>1.27.2</tobato.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <poi.version>4.1.2</poi.version>
+        <velocity.version>2.3</velocity.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <transmittable-thread-local.version>2.12.2</transmittable-thread-local.version>
+        <druid.version>1.2.8</druid.version>
+        <dynamic-ds.version>3.4.1</dynamic-ds.version>
+        <minio.version>8.2.2</minio.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <lombok.version>1.18.14</lombok.version>
     </properties>
-    <dependencies>
-        <!--配置文件处理器-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!--监控-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <!--监控客户端-->
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring-boot-admin.version}</version>
-        </dependency>
-        <!--Lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!--测试依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+
     <dependencyManagement>
         <dependencies>
+            <!-- spring 组件-->
+            <!-- springboot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -74,13 +57,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+            <!-- SpringCloud 微服务 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -88,16 +65,31 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- SpringBoot Admin -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <!--springfox swagger官方Starter-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- Mybatis 依赖配置 -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring-boot-starter.version}</version>
-            </dependency>
-            <!-- hutool -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
+                <version>${spring-boot.mybatis}</version>
             </dependency>
             <!-- mybatis-plus-boot-starter -->
             <dependency>
@@ -105,63 +97,282 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <!-- spring-plugin-core -->
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <groupId>org.springframework.plugin</groupId>
+                <artifactId>spring-plugin-core</artifactId>
+                <version>${spring-plugin-core.version}</version>
             </dependency>
+
+
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
             <!-- netty -->
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty-version}</version>
             </dependency>
+
             <!-- zookeeper -->
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper-version}</version>
             </dependency>
+
             <!-- zookeeper zkclient -->
             <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
                 <version>${zkclient-version}</version>
             </dependency>
-            <!-- fastjson -->
+
+            <!-- JSON 解析器和生成器 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!-- swagger-ui -->
+
+            <!-- io常用工具类 -->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <!-- swagger-ui -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
             </dependency>
 
+            <!-- Collection 增强Java集合框架 -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+
+            <!-- 文件上传工具类 -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload.version}</version>
+            </dependency>
+
+            <!-- 公共资源池 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${common-pool.version}</version>
+            </dependency>
+
+            <!-- pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+            <!-- FastDFS 分布式文件系统 -->
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${tobato.version}</version>
+            </dependency>
+
+            <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+
+            <!-- excel工具 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!-- 代码生成使用模板 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+
+            <!-- JWT -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <!-- 线程传递值 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+
+            <!-- Druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!-- Dynamic DataSource -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-ds.version}</version>
+            </dependency>
+
+            <!-- Minio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+
+            <!-- 实体映射工具 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!-- VMS Common -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-core</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- VMS System Api -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-api-system</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- VMS infrastructure -->
+            <!-- 接口模块 -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-swagger</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- 安全模块 -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-security</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- 权限范围 -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-datascope</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- 多数据源 -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-datasource</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- 日志记录 -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-log</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- 缓存服务 -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-redis</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- iot domain -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-domain-iot</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-application-iot</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
+    <dependencies>
+        <!-- bootstrap 启动器 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+    </dependencies>
+    <packaging>pom</packaging>
+    <description>IoT architecture</description>
+    <modules>
+        <module>vms-api</module>
+        <module>vms-application</module>
+        <module>vms-domain</module>
+        <module>vms-infrastructure</module>
+        <module>vms-modules</module>
+    </modules>
+
+
     <build>
+
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>${java.version}</source> <!-- depending on your project -->
+                    <target>${java.version}</target> <!-- depending on your project -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- other annotation processors -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.dreamcc.security.config.WebMvcConfig,\
+  com.dreamcc.security.service.TokenService,\
+  com.dreamcc.security.aspect.PreAuthorizeAspect,\
+  com.dreamcc.security.aspect.InnerAuthAspect,\
+  com.dreamcc.security.handler.GlobalExceptionHandler

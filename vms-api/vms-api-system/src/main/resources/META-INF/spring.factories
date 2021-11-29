@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.dreamcc.system.api.factory.RemoteUserFallbackFactory,\
+  com.dreamcc.system.api.factory.RemoteLogFallbackFactory, \
+  com.dreamcc.system.api.factory.RemoteFileFallbackFactory

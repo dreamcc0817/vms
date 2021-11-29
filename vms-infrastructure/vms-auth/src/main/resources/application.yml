@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: vms-auth
+    # Tomcat
+server:
+  port: 9200

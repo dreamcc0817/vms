@@ -1,0 +1,24 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: device
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.12.191.184:3306/vms?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: dreamcc@2020
+  cloud:
+    nacos:
+      server-addr: 106.12.191.184:8848
+    stream:
+      rocketmq:
+        binder:
+          name-server: 106.12.191.184:9876
+      bindings:
+        input:
+          destination: vms-topic
+          group: vms-device
+logging:
+  level:
+    com.dreamcc.service.device: debug

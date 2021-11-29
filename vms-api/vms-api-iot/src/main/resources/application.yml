@@ -1,0 +1,14 @@
+server:
+  port: 9931
+spring:
+  application:
+    name: vms-iot
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+

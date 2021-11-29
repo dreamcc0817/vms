@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vms-infrastructure</artifactId>
+        <groupId>com.dreamcc</groupId>
+        <version>v1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vms-upms</artifactId>
+
+    <dependencies>
+        <dependency>
+            <artifactId>vms-core</artifactId>
+            <groupId>com.dreamcc</groupId>
+        </dependency>
+
+        <!-- spring-boot-starter-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!--springfox swagger官方Starter-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.29</version>
+        </dependency>
+
+        <!--数据库-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!--  mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <!-- VMS DataSource -->
+        <dependency>
+            <groupId>com.dreamcc</groupId>
+            <artifactId>vms-datasource</artifactId>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <artifactId>vms-redis</artifactId>
+            <groupId>com.dreamcc</groupId>
+        </dependency>
+
+        <!-- VMS DataScope -->
+        <dependency>
+            <groupId>com.dreamcc</groupId>
+            <artifactId>vms-datascope</artifactId>
+        </dependency>
+
+        <!-- VMS Log -->
+        <dependency>
+            <groupId>com.dreamcc</groupId>
+            <artifactId>vms-log</artifactId>
+        </dependency>
+
+        <!-- VMS Swagger -->
+        <dependency>
+            <groupId>com.dreamcc</groupId>
+            <artifactId>vms-swagger</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>
