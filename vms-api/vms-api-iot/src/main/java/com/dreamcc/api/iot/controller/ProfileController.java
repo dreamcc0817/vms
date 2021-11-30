@@ -1,17 +1,15 @@
 package com.dreamcc.api.iot.controller;
 
-import com.dreamcc.api.iot.dto.ProfileDTO;
-import com.dreamcc.api.iot.mapstruct.ProfileMap;
 import com.dreamcc.application.iot.ProfileApplication;
+import com.dreamcc.application.iot.dto.ProfileDTO;
 import com.dreamcc.common.core.domain.R;
 import com.dreamcc.common.core.web.controller.BaseController;
-import com.dreamcc.domain.iot.domain.Profile;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author cloud-cc
@@ -20,31 +18,33 @@ import java.util.List;
  * @date 2021/11/27 15:19
  * @Version 1.0
  */
+@Api("模板管理")
 @RestController
 @RequestMapping("/profile")
 public class ProfileController extends BaseController {
 
-
     private final ProfileApplication profileApplication;
 
-    private final ProfileMap profileMap;
-
-    public ProfileController(ProfileApplication profileApplication, ProfileMap profileMap) {
+    public ProfileController(ProfileApplication profileApplication) {
         this.profileApplication = profileApplication;
-        this.profileMap = profileMap;
     }
 
+    @ApiOperation(value = "查询模板列表")
     @GetMapping("/list")
     public R list(){
-        List<ProfileDTO> list = new ArrayList<>();
-        list.add(new ProfileDTO(1L,"1","1","0"));
-        list.add(new ProfileDTO(2L,"2","2","1"));
-        return R.ok(list);
+        startPage();
+        return R.ok();
     }
 
-    @RequestMapping("/{profileId}")
+    @GetMapping("/{profileId}")
     public R getProfile(Long profileId){
-        Profile profile = profileApplication.getById(profileId);
-        return R.ok(profileMap.profileToDto(profile));
+        return R.ok();
+    }
+
+    @ApiOperation("添加模板")
+    @PostMapping
+    public R addProfile(ProfileDTO profileDTO){
+        profileApplication.save(profileDTO);
+        return R.ok();
     }
 }

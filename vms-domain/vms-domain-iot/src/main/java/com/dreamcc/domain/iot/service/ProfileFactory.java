@@ -19,8 +19,8 @@ public class ProfileFactory {
         this.idGenerator = idGenerator;
     }
 
-    public Profile create(String profileName, String profileDesc) {
-        Long profileId = idGenerator.snowFlakeId();
-        return Profile.createProfile(profileId, profileName, profileDesc);
+    public Profile create(Profile profile) {
+        Long id = idGenerator.snowFlakeId();
+        return profile.create(id);
     }
 }

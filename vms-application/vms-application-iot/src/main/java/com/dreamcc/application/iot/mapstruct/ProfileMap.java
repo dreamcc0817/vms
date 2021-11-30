@@ -1,7 +1,7 @@
-package com.dreamcc.api.iot.mapstruct;
+package com.dreamcc.application.iot.mapstruct;
 
 
-import com.dreamcc.api.iot.dto.ProfileDTO;
+import com.dreamcc.application.iot.dto.ProfileDTO;
 import com.dreamcc.domain.iot.domain.Profile;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

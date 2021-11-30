@@ -3,25 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>vms</artifactId>
+        <artifactId>vms-infrastructure</artifactId>
         <groupId>com.dreamcc</groupId>
         <version>v1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <modules>
-        <module>vms-core</module>
-        <module>vms-config</module>
-        <module>vms-gateway</module>
-        <module>vms-upms</module>
-        <module>vms-auth</module>
-        <module>vms-rpc</module>
-        <module>vms-orm</module>
-    </modules>
-
-
-    <artifactId>vms-infrastructure</artifactId>
-
+    <artifactId>vms-orm</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>vms-orm-iot</module>
+    </modules>
 
 </project>

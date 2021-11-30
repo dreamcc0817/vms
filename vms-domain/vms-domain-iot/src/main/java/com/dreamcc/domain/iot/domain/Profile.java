@@ -1,7 +1,6 @@
 package com.dreamcc.domain.iot.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -16,6 +15,9 @@ import java.util.Set;
  */
 @Getter
 @Builder
+@EqualsAndHashCode(of = {"name"})
+@NoArgsConstructor
+@AllArgsConstructor
 public class Profile {
 
     private Long id;
@@ -34,19 +36,12 @@ public class Profile {
     /**
      * 创建模板
      *
-     * @param profileId   ID
-     * @param name        模板名称
-     * @param description 描述
      * @return 模板
      */
-    public static Profile createProfile(Long profileId, String name, String description) {
-        Profile profile = Profile.builder()
-                .id(profileId)
-                .name(name)
-                .description(description)
-                .enable(true)
-                .build();
-        return profile;
+    public Profile create(Long id) {
+        this.id = id;
+        this.enable = Boolean.TRUE;
+        return this;
     }
 
 }

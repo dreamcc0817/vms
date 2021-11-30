@@ -19,7 +19,7 @@ public interface ProfileRepository {
      * @param profile 模板信息
      * @return 模板
      */
-    Profile save(Profile profile);
+    void save(Profile profile);
 
     /**
      * 根据Id获取模板
@@ -28,4 +28,12 @@ public interface ProfileRepository {
      * @return 模板
      */
     Profile getById(Long id);
+
+    /**
+     * 根据模板名称查找模板
+     *
+     * @param profileName 名称
+     * @return 模板信息
+     */
+    Profile getByName(String profileName);
 }

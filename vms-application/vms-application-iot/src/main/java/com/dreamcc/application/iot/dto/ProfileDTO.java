@@ -1,7 +1,8 @@
-package com.dreamcc.api.iot.dto;
+package com.dreamcc.application.iot.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author cloud-cc
@@ -11,6 +12,7 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDTO {
 

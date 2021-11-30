@@ -1,0 +1,13 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.dreamcc.domain.iot.service.ProfileFactory,\
+  com.dreamcc.domain.iot.service.PointFactory,\
+  com.dreamcc.domain.iot.service.DriverFactory,\
+  com.dreamcc.domain.iot.service.DeviceFactory,\
+  com.dreamcc.domain.iot.service.IdGenerator,\
+  com.dreamcc.domain.iot.repository.ProfileRepository,\
+  com.dreamcc.domain.iot.repository.PointRepository,\
+  com.dreamcc.domain.iot.repository.DeviceRepository,\
+  com.dreamcc.domain.iot.repository.DriverRepository
+
+
+  

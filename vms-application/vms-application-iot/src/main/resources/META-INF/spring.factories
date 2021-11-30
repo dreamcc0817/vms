@@ -1,0 +1,8 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.dreamcc.application.iot.ProfileApplication,\
+  com.dreamcc.application.iot.DeviceApplication,\
+  com.dreamcc.application.iot.DriverApplication,\
+  com.dreamcc.application.iot.PointApplication
+
+
+  
