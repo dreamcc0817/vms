@@ -11,7 +11,9 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author cloud-cc
@@ -33,6 +35,16 @@ public class ProfileApplication {
         this.profileFactory = profileFactory;
         this.profileRepository = profileRepository;
         this.profileMapper = profileMapper;
+    }
+
+    /**
+     * 获取模板列表
+     *
+     * @return List<ProfileDTO>
+     */
+    public List<ProfileDTO> list(ProfileDTO profileDTO) {
+        Profile profile = profileMapper.dtoToProfile(profileDTO);
+        return profileRepository.getList(profile).stream().map(profileMapper::profileToDto).collect(Collectors.toList());
     }
 
     /**

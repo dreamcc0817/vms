@@ -2,6 +2,8 @@ package com.dreamcc.domain.iot.repository;
 
 import com.dreamcc.domain.iot.domain.Profile;
 
+import java.util.List;
+
 /**
  * @author cloud-cc
  * @ClassName ProfileRepository
@@ -33,4 +35,11 @@ public interface ProfileRepository {
      * @return 模板信息
      */
     Profile getByName(String profileName);
+
+    /**
+     * 获取模板列表
+     *
+     * @return 模板列表
+     */
+    List<Profile> getList(Profile profile);
 }

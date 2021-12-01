@@ -28,9 +28,9 @@ public class ProfileController extends BaseController {
 
     @ApiOperation(value = "查询模板列表")
     @GetMapping("/list")
-    public R list(){
+    public R list(ProfileDTO profileDTO){
         startPage();
-        return R.ok();
+        return R.ok(profileApplication.list(profileDTO));
     }
 
     @ApiOperation("获取模板")
