@@ -15,6 +15,11 @@
 
         <dependency>
             <groupId>com.dreamcc</groupId>
+            <artifactId>vms-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dreamcc</groupId>
             <artifactId>vms-core</artifactId>
         </dependency>
 
@@ -42,6 +47,11 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
     </dependencies>

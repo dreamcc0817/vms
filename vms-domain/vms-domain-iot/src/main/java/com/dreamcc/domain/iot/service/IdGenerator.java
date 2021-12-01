@@ -18,7 +18,7 @@ public class IdGenerator {
      *
      * @return 雪花算法ID
      */
-    public long snowFlakeId() {
+    public Long snowFlakeId() {
         return IdUtil.createSnowflake(1, 1).nextId();
     }
 }

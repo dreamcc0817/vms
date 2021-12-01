@@ -15,7 +15,7 @@ import org.mapstruct.Mappings;
  * @Version 1.0
  */
 @Mapper(componentModel = "spring")
-public interface ProfileMap {
+public interface ProfileMapper {
 
     /**
      * dto转entity

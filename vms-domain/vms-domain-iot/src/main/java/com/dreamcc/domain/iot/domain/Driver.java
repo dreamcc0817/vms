@@ -2,7 +2,7 @@ package com.dreamcc.domain.iot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
@@ -17,7 +17,7 @@ import javax.validation.constraints.Pattern;
  * @date 2021/11/29 10:30
  * @Version 1.0
  */
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

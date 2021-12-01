@@ -1,7 +1,7 @@
 package com.dreamcc.domain.iot.domain;
 
 import com.dreamcc.domain.iot.domain.valueObject.StatusConstants;
-import lombok.Getter;
+import lombok.Data;
 
 /**
  * @author cloud-cc
@@ -10,7 +10,7 @@ import lombok.Getter;
  * @date 2021/11/29 20:50
  * @Version 1.0
  */
-@Getter
+@Data
 public class StatusCenter {
 
     /**

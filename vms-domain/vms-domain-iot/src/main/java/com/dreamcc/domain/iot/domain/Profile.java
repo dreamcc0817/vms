@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Set;
  * @date 2021/11/26 20:14
  * @Version 1.0
  */
-@Getter
+@Data
 @Builder
 @EqualsAndHashCode(of = {"name"})
 @NoArgsConstructor
@@ -27,11 +28,24 @@ public class Profile {
             message = "invalid name,contains invalid characters or length is not in the range of 2~32")
     private String name;
 
-    private Boolean enable;
+    private Integer enable;
 
     private String description;
 
     private Set<Long> pointIds;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+    /**
+     * 逻辑删除符
+     */
+    private Integer deleted;
 
     /**
      * 创建模板
@@ -40,7 +54,6 @@ public class Profile {
      */
     public Profile create(Long id) {
         this.id = id;
-        this.enable = Boolean.TRUE;
         return this;
     }
 

@@ -1,7 +1,6 @@
 package com.dreamcc.domain.iot.repository;
 
 import com.dreamcc.domain.iot.domain.Point;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/30 09:12
  * @Version 1.0
  */
-@Component
 public interface PointRepository {
 
     /**

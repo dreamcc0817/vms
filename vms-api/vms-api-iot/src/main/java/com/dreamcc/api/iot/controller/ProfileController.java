@@ -6,10 +6,7 @@ import com.dreamcc.common.core.domain.R;
 import com.dreamcc.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author cloud-cc
@@ -36,9 +33,10 @@ public class ProfileController extends BaseController {
         return R.ok();
     }
 
+    @ApiOperation("获取模板")
     @GetMapping("/{profileId}")
-    public R getProfile(Long profileId){
-        return R.ok();
+    public R getProfile(@PathVariable("profileId")Long profileId){
+        return R.ok(profileApplication.getById(profileId));
     }
 
     @ApiOperation("添加模板")

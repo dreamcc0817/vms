@@ -42,8 +42,8 @@
         <druid.version>1.2.8</druid.version>
         <dynamic-ds.version>3.4.1</dynamic-ds.version>
         <minio.version>8.2.2</minio.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <lombok.version>1.18.14</lombok.version>
+        <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -250,6 +250,8 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+
+
             <!-- VMS Common -->
             <dependency>
                 <groupId>com.dreamcc</groupId>
@@ -323,9 +325,26 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- iot application -->
             <dependency>
                 <groupId>com.dreamcc</groupId>
                 <artifactId>vms-application-iot</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- iot common -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-common</artifactId>
+                <version>${vms.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- iot common -->
+            <dependency>
+                <groupId>com.dreamcc</groupId>
+                <artifactId>vms-orm-iot</artifactId>
                 <version>${vms.version}</version>
                 <scope>compile</scope>
             </dependency>
@@ -347,6 +366,7 @@
         <module>vms-domain</module>
         <module>vms-infrastructure</module>
         <module>vms-modules</module>
+        <module>vms-common</module>
     </modules>
 
 
@@ -371,6 +391,11 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

@@ -1,7 +1,7 @@
 package com.dreamcc.application.iot;
 
 import com.dreamcc.application.iot.dto.DeviceDTO;
-import com.dreamcc.application.iot.mapstruct.DeviceMap;
+import com.dreamcc.application.iot.mapstruct.DeviceMapper;
 import com.dreamcc.domain.iot.domain.Device;
 import com.dreamcc.domain.iot.repository.DeviceRepository;
 import com.dreamcc.domain.iot.service.DeviceFactory;
@@ -21,12 +21,12 @@ public class DeviceApplication {
 
     private final DeviceFactory deviceFactory;
 
-    private final DeviceMap deviceMap;
+    private final DeviceMapper deviceMapper;
 
-    public DeviceApplication(DeviceRepository deviceRepository, DeviceFactory deviceFactory, DeviceMap deviceMap) {
+    public DeviceApplication(DeviceRepository deviceRepository, DeviceFactory deviceFactory, DeviceMapper deviceMapper) {
         this.deviceRepository = deviceRepository;
         this.deviceFactory = deviceFactory;
-        this.deviceMap = deviceMap;
+        this.deviceMapper = deviceMapper;
     }
 
     /**
@@ -35,7 +35,7 @@ public class DeviceApplication {
      * @param deviceDTO 设备
      */
     public void create(DeviceDTO deviceDTO) {
-        Device device = deviceMap.dtoToDevice(deviceDTO);
+        Device device = deviceMapper.dtoToDevice(deviceDTO);
         deviceFactory.create(device);
         deviceRepository.save(device);
     }

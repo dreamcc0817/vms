@@ -1,7 +1,6 @@
 package com.dreamcc.domain.iot.repository;
 
 import com.dreamcc.domain.iot.domain.Profile;
-import org.springframework.stereotype.Component;
 
 /**
  * @author cloud-cc
@@ -10,14 +9,12 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/27 09:12
  * @Version 1.0
  */
-@Component
 public interface ProfileRepository {
 
     /**
      * 保存
      *
      * @param profile 模板信息
-     * @return 模板
      */
     void save(Profile profile);
 

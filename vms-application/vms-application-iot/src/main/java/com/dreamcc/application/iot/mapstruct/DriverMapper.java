@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
  * @Version 1.0
  */
 @Mapper(componentModel = "spring")
-public interface DriverMap {
+public interface DriverMapper {
 
     /**
      * dto转entity

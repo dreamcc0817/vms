@@ -1,8 +1,8 @@
-package com.dreamcc.api.iot;
+package com.dreamcc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * @author cloud-cc
@@ -11,7 +11,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @date 2021/11/27 20:48
  * @Version 1.0
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@EnableCaching
+@SpringBootApplication
 public class IotApp {
     public static void main(String[] args) {
         SpringApplication.run(IotApp.class, args);

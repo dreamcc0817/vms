@@ -1,7 +1,7 @@
 package com.dreamcc.domain.iot.domain;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
  * @date 2021/11/30 08:41
  * @Version 1.0
  */
-@Getter
+@Data
 @Builder
 public class Point {
 
