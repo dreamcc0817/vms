@@ -18,7 +18,21 @@ public interface ProfileRepository {
      *
      * @param profile 模板信息
      */
-    void save(Profile profile);
+    void add(Profile profile);
+
+    /**
+     * 更新
+     *
+     * @param profile 模板信息
+     */
+    void update(Profile profile);
+
+    /**
+     * 删除
+     *
+     * @param id id
+     */
+    void delete(Long id);
 
     /**
      * 根据Id获取模板
@@ -39,6 +53,7 @@ public interface ProfileRepository {
     /**
      * 获取模板列表
      *
+     * @param profile 筛选条件
      * @return 模板列表
      */
     List<Profile> getList(Profile profile);

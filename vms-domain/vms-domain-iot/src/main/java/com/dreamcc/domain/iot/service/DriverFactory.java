@@ -18,8 +18,8 @@ public class DriverFactory {
         this.idGenerator = idGenerator;
     }
 
-    public Driver registry(Driver driver) {
+    public Driver add(Driver driver) {
         Long id = idGenerator.snowFlakeId();
-        return driver.registry(id);
+        return driver.add(id);
     }
 }

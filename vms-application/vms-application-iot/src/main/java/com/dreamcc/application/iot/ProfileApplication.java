@@ -7,7 +7,9 @@ import com.dreamcc.domain.iot.domain.Profile;
 import com.dreamcc.domain.iot.domain.valueObject.CacheConstants;
 import com.dreamcc.domain.iot.repository.ProfileRepository;
 import com.dreamcc.domain.iot.service.ProfileFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +42,10 @@ public class ProfileApplication {
     /**
      * 获取模板列表
      *
+     * @param profileDTO 查询条件
      * @return List<ProfileDTO>
      */
+    @Cacheable(value = CacheConstants.PROFILE + CacheConstants.LIST, keyGenerator = "commonKeyGenerator", unless = "#result == null")
     public List<ProfileDTO> list(ProfileDTO profileDTO) {
         Profile profile = profileMapper.dtoToProfile(profileDTO);
         return profileRepository.getList(profile).stream().map(profileMapper::profileToDto).collect(Collectors.toList());
@@ -57,18 +61,38 @@ public class ProfileApplication {
             put = {
                     @CachePut(value = CacheConstants.PROFILE + CacheConstants.ID, key = "#profileDTO.profileId", condition = "#result != null")
                     , @CachePut(value = CacheConstants.PROFILE + CacheConstants.NAME, key = "#profileDTO.profileName", condition = "#result != null")
+            },
+            evict = {
+                    @CacheEvict(value = CacheConstants.PROFILE + CacheConstants.LIST, allEntries = true, condition = "#result!=null")
             }
     )
-    public ProfileDTO save(ProfileDTO profileDTO) {
+    public ProfileDTO add(ProfileDTO profileDTO) {
         Profile profile = profileMapper.dtoToProfile(profileDTO);
         Profile isExist = profileRepository.getByName(profileDTO.getProfileName());
         if (Optional.ofNullable(isExist).isPresent()) {
             throw new DuplicateException("The profile already exists");
         } else {
             profileFactory.create(profile);
-            profileRepository.save(profile);
+            profileRepository.add(profile);
         }
         return profileMapper.profileToDto(profile);
+    }
+
+
+    /**
+     * 删除模板
+     *
+     * @param id id
+     */
+    @Caching(
+            evict = {
+                    @CacheEvict(value = CacheConstants.PROFILE + CacheConstants.ID, key = "#id"),
+                    @CacheEvict(value = CacheConstants.PROFILE + CacheConstants.NAME + CacheConstants.TYPE, allEntries = true),
+                    @CacheEvict(value = CacheConstants.PROFILE + CacheConstants.LIST, allEntries = true)
+            }
+    )
+    public void deleteById(Long id) {
+        profileRepository.delete(id);
     }
 
     /**
@@ -79,5 +103,11 @@ public class ProfileApplication {
      */
     public Profile getById(Long id) {
         return profileRepository.getById(id);
+    }
+
+    public Profile update(ProfileDTO profileDTO) {
+        Profile profile = profileMapper.dtoToProfile(profileDTO);
+        profileRepository.update(profile);
+        return profile;
     }
 }

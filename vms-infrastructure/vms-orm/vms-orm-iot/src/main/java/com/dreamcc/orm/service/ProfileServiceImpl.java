@@ -33,9 +33,20 @@ public class ProfileServiceImpl implements ProfileRepository {
     }
 
     @Override
-    public void save(Profile profile) {
+    public void add(Profile profile) {
         ProfilePO profilePo = poMapper.profileToPo(profile);
         profileDAO.insert(profilePo);
+    }
+
+    @Override
+    public void update(Profile profile) {
+        ProfilePO profilePo = poMapper.profileToPo(profile);
+        profileDAO.updateById(profilePo);
+    }
+
+    @Override
+    public void delete(Long id) {
+        profileDAO.deleteById(id);
     }
 
     @Override

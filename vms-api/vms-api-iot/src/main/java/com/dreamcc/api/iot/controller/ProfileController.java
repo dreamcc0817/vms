@@ -42,7 +42,7 @@ public class ProfileController extends BaseController {
     @ApiOperation("添加模板")
     @PostMapping
     public R addProfile(ProfileDTO profileDTO){
-        profileApplication.save(profileDTO);
+        profileApplication.add(profileDTO);
         return R.ok();
     }
 }

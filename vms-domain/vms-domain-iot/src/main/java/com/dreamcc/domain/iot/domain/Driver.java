@@ -69,12 +69,12 @@ public class Driver {
     private String description;
 
     /**
-     * 注册驱动
+     * 添加驱动基本信息
      *
      * @param id id
      * @return 驱动信息
      */
-    public Driver registry(Long id){
+    public Driver add(Long id){
         this.id = id;
         this.enable = Boolean.TRUE;
         return this;

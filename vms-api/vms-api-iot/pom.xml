@@ -25,7 +25,7 @@
 
         <dependency>
             <groupId>com.dreamcc</groupId>
-            <artifactId>vms-application-iot</artifactId>
+            <artifactId>vms-orm-iot</artifactId>
         </dependency>
 
         <dependency>

@@ -30,8 +30,9 @@ public class PointApplication {
      * @param point 位号信息
      * @return 位号
      */
-    public void save(Point point) {
+    public Point save(Point point) {
         pointFactory.create(point);
         pointRepository.save(point);
+        return point;
     }
 }
