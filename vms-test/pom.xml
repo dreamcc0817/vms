@@ -9,20 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <modules>
-        <module>vms-core</module>
-        <module>vms-config</module>
-        <module>vms-gateway</module>
-        <module>vms-upms</module>
-        <module>vms-auth</module>
-        <module>vms-rpc</module>
-        <module>vms-orm</module>
-        <module>vms-iot-gateway</module>
-    </modules>
+    <artifactId>vms-test</artifactId>
 
-
-    <artifactId>vms-infrastructure</artifactId>
-
-    <packaging>pom</packaging>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
 </project>

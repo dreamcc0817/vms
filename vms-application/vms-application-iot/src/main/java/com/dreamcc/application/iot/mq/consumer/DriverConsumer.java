@@ -1,5 +1,7 @@
 package com.dreamcc.application.iot.mq.consumer;
 
+import com.dreamcc.application.iot.mq.event.DriverEvent;
+
 /**
  * @author cloud-cc
  * @ClassName DriverConsumer
@@ -9,4 +11,7 @@ package com.dreamcc.application.iot.mq.consumer;
  */
 public interface DriverConsumer {
 
+    DriverEvent receiveHandShakeEvent();
+
+    DriverEvent receiveRegisterEvent();
 }

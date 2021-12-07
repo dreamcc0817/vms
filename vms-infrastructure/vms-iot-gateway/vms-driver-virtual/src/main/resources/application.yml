@@ -1,0 +1,16 @@
+driver:
+  driver-info:
+    name: virtual
+    type: driver
+    description: 虚拟驱动
+
+spring:
+  application:
+    name: vms-driver-virtual
+    cloud:
+      nacos:
+        discovery:
+          # 服务注册地址
+          server-addr: 127.0.0.1:8848
+server:
+  port: 8897

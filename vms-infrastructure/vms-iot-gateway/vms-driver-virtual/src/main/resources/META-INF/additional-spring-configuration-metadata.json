@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "driver.driver-info",
+      "type": "java.lang.String",
+      "description": "Description for driver.driver-info."
+    },
+    {
+      "name": "driver.driver-info.name",
+      "type": "java.lang.String",
+      "description": "Description for driver.driver-info.name."
+    },
+    {
+      "name": "driver.driver-info.type",
+      "type": "java.lang.String",
+      "description": "Description for driver.driver-info.type."
+    },
+    {
+      "name": "driver.driver-info.description",
+      "type": "java.lang.String",
+      "description": "Description for driver.driver-info.description."
+    }
+  ] }

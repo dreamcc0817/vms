@@ -9,6 +9,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  * @author cloud-cc
@@ -21,7 +22,7 @@ import javax.validation.constraints.Pattern;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Driver {
+public class Driver implements Serializable {
 
     private Long id;
 
@@ -54,7 +55,7 @@ public class Driver {
     private Integer port;
 
     /**
-     * 类型：驱动/gateway
+     * 类型：driver/gateway
      */
     private String type;
 
@@ -74,7 +75,7 @@ public class Driver {
      * @param id id
      * @return 驱动信息
      */
-    public Driver add(Long id){
+    public Driver add(Long id) {
         this.id = id;
         this.enable = Boolean.TRUE;
         return this;

@@ -1,4 +1,4 @@
-package com.dreamcc.application.iot.dto;
+package com.dreamcc.driver.virtual.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

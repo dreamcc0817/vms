@@ -1,5 +1,8 @@
 package com.dreamcc.application.iot;
 
+import com.dreamcc.application.iot.dto.DriverDTO;
+import com.dreamcc.application.iot.mapstruct.DriverMapper;
+import com.dreamcc.application.iot.mq.consumer.DriverConsumer;
 import com.dreamcc.application.iot.mq.event.DriverEvent;
 import com.dreamcc.application.iot.mq.producer.DriverProducer;
 import com.dreamcc.domain.iot.domain.Driver;
@@ -24,23 +27,32 @@ public class DriverApplication {
 
     private final DriverProducer driverProducer;
 
-    public DriverApplication(DriverFactory driverFactory, DriverRepository driverRepository, DriverProducer driverProducer) {
+    private final DriverConsumer driverConsumer;
+
+    private final DriverMapper driverMapper;
+
+    public DriverApplication(DriverFactory driverFactory, DriverRepository driverRepository, DriverProducer driverProducer, DriverConsumer driverConsumer, DriverMapper driverMapper) {
         this.driverFactory = driverFactory;
         this.driverRepository = driverRepository;
         this.driverProducer = driverProducer;
+        this.driverConsumer = driverConsumer;
+        this.driverMapper = driverMapper;
     }
 
     /**
      * 注册驱动
      *
-     * @param driver 驱动
+     * @param driverDTO 驱动
      */
-    public void registry(Driver driver) {
+    public void registry(DriverDTO driverDTO) {
+
+        Driver driver = driverMapper.dtoToDriver(driverDTO);
 
         driverFactory.add(driver);
 
         DriverEvent driverEvent = new DriverEvent(DriverConstants.DRIVER_REGISTER,driver);
         driverProducer.driverEventSender(driverEvent);
+
     }
 
     /**

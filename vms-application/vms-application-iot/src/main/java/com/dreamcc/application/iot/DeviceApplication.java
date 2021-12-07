@@ -40,13 +40,4 @@ public class DeviceApplication {
         deviceRepository.save(device);
     }
 
-    /**
-     * 根据ID获取设备
-     *
-     * @param id ID
-     * @return 设备信息
-     */
-    public Device getById(Long id) {
-        return deviceRepository.getById(id);
-    }
 }

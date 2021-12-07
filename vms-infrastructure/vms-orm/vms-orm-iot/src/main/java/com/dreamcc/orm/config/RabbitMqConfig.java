@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * @author cloud-cc
- * @ClassName RabbtiMqConfig
+ * @ClassName RabbitMqConfig
  * @Description rabbitmq配置类
  * @date 2021/12/2 16:34
  * @Version 1.0
@@ -48,6 +48,8 @@ public class RabbitMqConfig {
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         return factory;
     }
+
+
 
     @Bean
     public TopicExchange eventExchange() {

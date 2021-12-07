@@ -367,6 +367,7 @@
         <module>vms-infrastructure</module>
         <module>vms-modules</module>
         <module>vms-common</module>
+        <module>vms-test</module>
     </modules>
 
 

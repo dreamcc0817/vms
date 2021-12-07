@@ -19,6 +19,9 @@ public class DriverEvent {
 
     private Object content;
 
+    public DriverEvent() {
+    }
+
     public DriverEvent(String type, Object content) {
         this.type = type;
         this.content = content;

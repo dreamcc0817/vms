@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author cloud-cc
  * @ClassName DeviceServiceImpl
- * @Description TODO
+ * @Description 设备
  * @date 2021/12/1 13:58
  * @Version 1.0
  */
