@@ -1,7 +1,6 @@
 package com.dreamcc.domain.iot.service;
 
 import cn.hutool.core.util.IdUtil;
-import org.springframework.stereotype.Component;
 
 /**
  * @author cloud-cc
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/27 13:59
  * @Version 1.0
  */
-@Component
 public class IdGenerator {
 
     /**
@@ -18,7 +16,7 @@ public class IdGenerator {
      *
      * @return 雪花算法ID
      */
-    public Long snowFlakeId() {
+    public static Long snowFlakeId() {
         return IdUtil.createSnowflake(1, 1).nextId();
     }
 }

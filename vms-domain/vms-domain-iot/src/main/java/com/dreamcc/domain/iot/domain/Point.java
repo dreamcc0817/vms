@@ -2,10 +2,11 @@ package com.dreamcc.domain.iot.domain;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  * @author cloud-cc
@@ -16,7 +17,8 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @Builder
-public class Point {
+@EqualsAndHashCode(of = {"name"})
+public class Point implements Serializable {
 
     /**
      * id
@@ -80,12 +82,6 @@ public class Point {
      * 是否可用
      */
     private Boolean enable;
-
-    /**
-     * 模板不能为空
-     */
-    @NotNull(message = "profile can't be empty")
-    private Profile profile;
 
     /**
      * 描述

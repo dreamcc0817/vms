@@ -1,7 +1,6 @@
 package com.dreamcc.orm.service;
 
 import com.dreamcc.domain.iot.domain.Point;
-import com.dreamcc.domain.iot.repository.PointRepository;
 import org.springframework.stereotype.Service;
 
 /**

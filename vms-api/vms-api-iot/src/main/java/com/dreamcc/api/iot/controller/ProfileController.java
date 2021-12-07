@@ -1,7 +1,8 @@
 package com.dreamcc.api.iot.controller;
 
 import com.dreamcc.application.iot.ProfileApplication;
-import com.dreamcc.application.iot.dto.ProfileDTO;
+import com.dreamcc.application.iot.command.CreateProfileCommand;
+import com.dreamcc.application.iot.query.ProfileQuery;
 import com.dreamcc.common.core.domain.R;
 import com.dreamcc.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author cloud-cc
  * @ClassName ProfileController
- * @Description 模板Controller
+ * @Description 模板API
  * @date 2021/11/27 15:19
  * @Version 1.0
  */
@@ -28,9 +29,9 @@ public class ProfileController extends BaseController {
 
     @ApiOperation(value = "查询模板列表")
     @GetMapping("/list")
-    public R list(ProfileDTO profileDTO){
+    public R list(ProfileQuery profileQuery){
         startPage();
-        return R.ok(profileApplication.list(profileDTO));
+        return R.ok(profileApplication.list(profileQuery));
     }
 
     @ApiOperation("获取模板")
@@ -41,8 +42,8 @@ public class ProfileController extends BaseController {
 
     @ApiOperation("添加模板")
     @PostMapping
-    public R addProfile(ProfileDTO profileDTO){
-        profileApplication.add(profileDTO);
+   public R addProfile(CreateProfileCommand createProfileCommand){
+        profileApplication.create(createProfileCommand);
         return R.ok();
     }
 }

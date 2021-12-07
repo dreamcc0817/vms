@@ -11,7 +11,17 @@ import com.dreamcc.application.iot.mq.event.DriverEvent;
  */
 public interface DriverConsumer {
 
+    /**
+     * 发送握手命令
+     *
+     * @return DriverEvent
+     */
     DriverEvent receiveHandShakeEvent();
 
+    /**
+     * 接收注册事件
+     *
+     * @return DriverEvent
+     */
     DriverEvent receiveRegisterEvent();
 }

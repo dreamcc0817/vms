@@ -29,6 +29,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
+
+        <!-- 业务包 -->
+        <dependency>
+            <groupId>com.dreamcc</groupId>
+            <artifactId>vms-common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

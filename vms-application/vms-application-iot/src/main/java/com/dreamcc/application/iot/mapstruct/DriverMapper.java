@@ -15,14 +15,6 @@ import org.mapstruct.Mapper;
 public interface DriverMapper {
 
     /**
-     * dto转entity
-     *
-     * @param driverDTO dto
-     * @return entity
-     */
-    Driver dtoToDriver(DriverDTO driverDTO);
-
-    /**
      * entity转dto
      *
      * @param driver entity

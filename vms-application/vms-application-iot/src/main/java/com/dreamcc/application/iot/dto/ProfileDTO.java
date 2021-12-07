@@ -1,7 +1,9 @@
 package com.dreamcc.application.iot.dto;
 
+import com.dreamcc.common.constans.BaseDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -13,16 +15,17 @@ import java.io.Serializable;
  * @date 2021/11/27 14:38
  * @Version 1.0
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileDTO implements Serializable {
+public class ProfileDTO extends BaseDomain implements Serializable {
 
-    private Long profileId;
+    private Long id;
 
-    private String profileName;
+    private String name;
 
-    private String profileDesc;
+    private String description;
 
-    private String enable;
+    private Integer enable;
 }

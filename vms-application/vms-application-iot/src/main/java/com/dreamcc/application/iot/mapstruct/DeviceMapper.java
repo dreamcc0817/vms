@@ -15,14 +15,6 @@ import org.mapstruct.Mapper;
 public interface DeviceMapper {
 
     /**
-     * dto转entity
-     *
-     * @param deviceDTO dto
-     * @return entity
-     */
-    Device dtoToDevice(DeviceDTO deviceDTO);
-
-    /**
      * entity转dto
      *
      * @param device entity

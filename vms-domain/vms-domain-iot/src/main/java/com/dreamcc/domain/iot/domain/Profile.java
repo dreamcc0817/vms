@@ -1,10 +1,12 @@
 package com.dreamcc.domain.iot.domain;
 
+import com.dreamcc.common.constans.BaseDomain;
+import com.dreamcc.domain.iot.service.IdGenerator;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -16,10 +18,10 @@ import java.util.Set;
  */
 @Data
 @Builder
-@EqualsAndHashCode(of = {"name"})
+@EqualsAndHashCode(of = {"name"}, callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profile {
+public class Profile extends BaseDomain implements Serializable {
 
     private Long id;
 
@@ -32,29 +34,23 @@ public class Profile {
 
     private String description;
 
-    private Set<Long> pointIds;
+    private Set<Point> pointIds;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-    /**
-     * 逻辑删除符
-     */
-    private Integer deleted;
 
     /**
      * 创建模板
      *
      * @return 模板
      */
-    public Profile create(Long id) {
-        this.id = id;
-        return this;
+    public static Profile create(String name, String description) {
+        Profile profile = Profile.builder()
+                .id(IdGenerator.snowFlakeId())
+                .name(name)
+                .enable(1)
+                .description(description)
+                .build();
+        //TODO 事件event
+        return profile;
     }
 
 }
