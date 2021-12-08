@@ -1,6 +1,6 @@
 package com.dreamcc.domain.iot.repository;
 
-import com.dreamcc.domain.iot.domain.Driver;
+import com.dreamcc.domain.iot.domain.aggregate.driver.Driver;
 
 /**
  * @author cloud-cc

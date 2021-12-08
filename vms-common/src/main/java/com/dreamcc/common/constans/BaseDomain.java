@@ -1,6 +1,7 @@
 package com.dreamcc.common.constans;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @date 2021/12/7 16:37
  * @Version 1.0
  */
+@Data
 public class BaseDomain implements Serializable {
 
     /**

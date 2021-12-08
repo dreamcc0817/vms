@@ -16,7 +16,7 @@
         <module>vms-upms</module>
         <module>vms-auth</module>
         <module>vms-rpc</module>
-        <module>vms-orm</module>
+        <module>vms-infrastructure-iot</module>
         <module>vms-iot-gateway</module>
     </modules>
 

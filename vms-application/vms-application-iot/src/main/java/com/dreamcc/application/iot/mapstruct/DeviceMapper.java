@@ -1,7 +1,7 @@
 package com.dreamcc.application.iot.mapstruct;
 
 import com.dreamcc.application.iot.dto.DeviceDTO;
-import com.dreamcc.domain.iot.domain.Device;
+import com.dreamcc.domain.iot.domain.aggregate.device.Device;
 import org.mapstruct.Mapper;
 
 /**

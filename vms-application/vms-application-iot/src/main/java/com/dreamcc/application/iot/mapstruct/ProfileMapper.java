@@ -3,9 +3,8 @@ package com.dreamcc.application.iot.mapstruct;
 
 import com.dreamcc.application.iot.dto.ProfileDTO;
 import com.dreamcc.application.iot.query.ProfileQuery;
-import com.dreamcc.domain.iot.domain.Profile;
+import com.dreamcc.domain.iot.domain.aggregate.profile.Profile;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 /**
  * @author cloud-cc
@@ -23,9 +22,6 @@ public interface ProfileMapper {
      * @param profile entity
      * @return dto
      */
-    @Mapping(source = "id", target = "profileId")
-    @Mapping(source = "name", target = "profileName")
-    @Mapping(source = "description", target = "profileDesc")
     ProfileDTO profileToDto(Profile profile);
 
     /**
