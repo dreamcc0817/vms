@@ -27,7 +27,7 @@
         <netty-version>4.1.36.Final</netty-version>
         <zookeeper-version>3.4.8</zookeeper-version>
         <zkclient-version>0.11</zkclient-version>
-        <fastjson.version>1.2.78</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <commons.io.version>2.11.0</commons.io.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
